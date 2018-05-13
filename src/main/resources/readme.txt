@@ -1,1 +1,0 @@
-sample readme file in resources dir
