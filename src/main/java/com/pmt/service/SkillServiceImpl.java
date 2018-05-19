@@ -2,6 +2,8 @@ package com.pmt.service;
 
 import java.util.List;
 
+import org.apache.log4j.LogManager;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ import com.pmt.model.Skill;
 @Transactional(isolation=Isolation.READ_COMMITTED)
 @Service(value="skillServiceImpl")
 public class SkillServiceImpl implements SkillService {
+	
+	private static Logger logger = LogManager.getLogger(SkillServiceImpl.class);
 	
 	@Autowired
 	@Qualifier("skillDaoImpl")
