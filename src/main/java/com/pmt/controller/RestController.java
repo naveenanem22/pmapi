@@ -49,12 +49,12 @@ public class RestController {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/healthcheck")
-	public Response healthCheck() {
-		
-		ResultWithData result = new ResultWithData();
+	public Response healthCheck() throws Throwable{
+		throw new Throwable();
+		/*ResultWithData result = new ResultWithData();
 		result.setStatus(REST_STATUS_SUCCESS);
 		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
-		return Response.status(Status.OK).entity(entity).build();
+		return Response.status(Status.OK).entity(entity).build();*/
 	}
 
 	@GET
@@ -100,13 +100,7 @@ public class RestController {
 		return Response.status(Status.INTERNAL_SERVER_ERROR).entity(entity).build();
 	}
 	
-	@ExceptionHandler(Exception.class)
-	public Response localExceptionHandler(){
-		ResultWithData result = new ResultWithData();		
-		result.setStatus(REST_STATUS_FAILURE);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
-		return Response.status(Status.INTERNAL_SERVER_ERROR).entity(entity).build();
-	}
+	
 	
 
 }

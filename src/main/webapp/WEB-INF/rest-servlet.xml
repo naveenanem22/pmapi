@@ -17,6 +17,8 @@
 	<context:component-scan base-package="com.pmt.service" />
 	<context:component-scan base-package="com.pmt.model" />
 	<context:component-scan base-package="com.pmt.controller" />
+	<context:component-scan base-package="com.pmt.util.response" />
+	<context:component-scan base-package="com.pmt.common" />
 	
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"> 	
         <property name="driverClassName"  value="com.mysql.jdbc.Driver"></property>  
