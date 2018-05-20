@@ -23,12 +23,8 @@
         <property name="url" value="jdbc:mysql://localhost:3306/pmapi"></property>  
         <property name="username" value="root"></property>  
         <property name="password" value="srvnav"></property>  
-    </bean>
-    
-	<bean id="simpleresult"
-	    class="com.pmt.util.response.SimpleResult"
-	    scope="request">
-	</bean>
+    </bean>    
+
     
 	<bean id="hibernate4AnnotatedSessionFactory"
         class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
