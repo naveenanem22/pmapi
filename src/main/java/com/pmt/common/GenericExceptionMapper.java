@@ -14,15 +14,23 @@ import org.apache.log4j.Logger;
 import com.pmt.controller.RestController;
 import com.pmt.util.response.ResultWithData;
 
-/** This is to catch all unchecked exceptions. This is registered
- * with Jersey using the @Provider annotation  
- *
+/** Global exception-mapper to catch unchecked exceptions across all the REST APIs part of pmapi.
+ * This is registered with Jersey using the @Provider annotation.
+ * 
+ *  Eg: If add or update skill operation fails at Service/DAO/Controller layer for unknown reasons, a default
+ *  response - 500 equivalent Internal Server Error - is built and posted back to
+ *  client.
+ * 
+ * 
  */
 @Provider
 public class GenericExceptionMapper implements ExceptionMapper<Throwable>{
 	
 	private static final Logger logger = LogManager.getLogger(GenericExceptionMapper.class); 
 
+	/** 
+	* @return {"data": null, "status": "Success"}
+	*/
 	@Override
 	public Response toResponse(Throwable ex) {
 		logger.debug(ex);

@@ -12,7 +12,9 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-
+	
+	
+	<!-- This is a Dispatcher servlet acting as Front Conroller	in "Front Controller" design pattern -->
 	<servlet>
 		<servlet-name>jersey-serlvet</servlet-name>
 		<servlet-class>com.sun.jersey.spi.spring.container.servlet.SpringServlet</servlet-class>

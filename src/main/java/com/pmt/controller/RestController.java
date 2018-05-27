@@ -32,8 +32,12 @@ import com.pmt.util.response.ResultWithData;
 import static com.pmt.common.PMAPIConstants.*;
 
 /**
-* This is the main REST-Controller handling all the request and responses
+* This is the main REST-Controller handling all the requests and responses
 * for various APIs across the application. 
+* 
+* The role is to receive and process requests from Dispatcher Servlet - 
+* com.sun.jersey.spi.spring.container.servlet.SpringServlet - declared as part of
+* web.xml. 
 * 
 * @author  Naveen Anem
 * @version 1.0
@@ -112,6 +116,7 @@ public class RestController {
 		return Response.ok(entity).build();
 	}
 	
+	/*This a developer testing that need to be deleted if no more necessary*/
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
