@@ -3,9 +3,12 @@ package com.pmt.controller;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.MediaType;
@@ -29,7 +32,7 @@ import com.pmt.util.response.ResultWithData;
 import static com.pmt.common.PMAPIConstants.*;
 
 /**
-* This is the main controller handling all the request and response
+* This is the main REST-Controller handling all the request and responses
 * for various APIs across the application. 
 * 
 * @author  Naveen Anem
@@ -49,12 +52,12 @@ public class RestController {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/healthcheck")
-	public Response healthCheck() throws Throwable{
-		throw new Throwable();
-		/*ResultWithData result = new ResultWithData();
+	public Response healthCheck(){
+		
+		ResultWithData result = new ResultWithData();
 		result.setStatus(REST_STATUS_SUCCESS);
 		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
-		return Response.status(Status.OK).entity(entity).build();*/
+		return Response.status(Status.OK).entity(entity).build();
 	}
 
 	@GET
@@ -71,20 +74,40 @@ public class RestController {
 	}
 	
 	@POST
-	@Path("/skills/add")
+	@Path("/skills")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addSkill(Skill skill){		
-		ResultWithData result = new ResultWithData();
-		
-		try{
+		ResultWithData result = new ResultWithData();		
 		skillService.addSkill(skill);
+		result.setStatus(REST_STATUS_SUCCESS);				
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		return Response.ok(entity).build();
+	}
+	
+	@DELETE
+	@Path("/skills/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removeSkill(@PathParam("id") int id){
+		ResultWithData result = new ResultWithData();
+		skillService.removeSkill(id);
 		result.setStatus(REST_STATUS_SUCCESS);
-		}catch(Exception ex){
-			result.setStatus(REST_STATUS_FAILURE);
-			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(result).build();
-		}
-				
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		return Response.ok(entity).build();
+	}
+	
+	@PUT
+	@Path("/skills/{id}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateSkill(Skill skillObj,@PathParam("id") int id){
+		ResultWithData result= new ResultWithData();
+		Skill skill = skillService.getSkillById(id);
+		skill.setCategory(skillObj.getCategory());
+		skill.setDescription(skillObj.getDescription());
+		skill.setName(skillObj.getName());
+		skillService.updateSkill(skill);
+		result.setStatus(REST_STATUS_SUCCESS);
 		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
 		return Response.ok(entity).build();
 	}
@@ -93,11 +116,13 @@ public class RestController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/testrespbld")
-	public Response testResponseBuilder(){		
+	public Response testResponseBuilder(){
+		String[] forex = {"first","second"};
+		
 		ResultWithData result = new ResultWithData();		
-		result.setStatus(REST_STATUS_FAILURE);
+		result.setStatus(forex[5]);
 		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
-		return Response.status(Status.INTERNAL_SERVER_ERROR).entity(entity).build();
+		return Response.status(Status.OK).entity(entity).build();
 	}
 	
 	
