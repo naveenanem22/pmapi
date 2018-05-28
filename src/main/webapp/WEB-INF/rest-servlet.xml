@@ -34,6 +34,7 @@
         <property name="annotatedClasses">
             <list>
                 <value>com.pmt.model.Skill</value>
+                <value>com.pmt.model.Businessunit</value>
             </list>
         </property>
         <property name="hibernateProperties">

@@ -24,7 +24,9 @@ import org.springframework.stereotype.Controller;
 
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.pmt.model.Businessunit;
 import com.pmt.model.Skill;
+import com.pmt.service.BusinessunitService;
 import com.pmt.service.SkillService;
 import com.pmt.util.response.ResultWithData;
 import com.pmt.util.response.ResultWithData;
@@ -53,6 +55,10 @@ public class RestController {
 	@Qualifier("skillServiceImpl")
 	private SkillService skillService;
 	
+	@Autowired
+	@Qualifier("businessunitServiceImpl")
+	private BusinessunitService businessunitService;
+	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/healthcheck")
@@ -63,6 +69,8 @@ public class RestController {
 		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
 		return Response.status(Status.OK).entity(entity).build();
 	}
+	
+	/**********Skill APIs start***********/
 
 	@GET
 	@Path("/skills")
@@ -101,22 +109,74 @@ public class RestController {
 	}
 	
 	@PUT
-	@Path("/skills/{id}")
+	@Path("/skills")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateSkill(Skill skillObj,@PathParam("id") int id){
+	public Response updateSkill(Skill skill){
 		ResultWithData result= new ResultWithData();
-		Skill skill = skillService.getSkillById(id);
-		skill.setCategory(skillObj.getCategory());
-		skill.setDescription(skillObj.getDescription());
-		skill.setName(skillObj.getName());
 		skillService.updateSkill(skill);
 		result.setStatus(REST_STATUS_SUCCESS);
 		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
 		return Response.ok(entity).build();
 	}
 	
-	/*This a developer testing that need to be deleted if no more necessary*/
+	/**********Skill APIs end***********/
+	
+	/**********BusinessUnit APIs start***********/
+	
+	@GET
+	@Path("/businessunits")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getBusinessunits(){
+		ResultWithData result = new ResultWithData();
+		List<Businessunit> businessunits = businessunitService.listBusinessunits();
+		result.setStatus(REST_STATUS_SUCCESS);
+		result.setData(businessunits);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+	
+	@POST
+	@Path("/businessunits")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addBusinessunit(Businessunit businessunit){
+		ResultWithData result = new ResultWithData();
+		businessunitService.addBusinessunit(businessunit);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+	
+	@PUT
+	@Path("/businessunits")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateBusinessunit(Businessunit businessunit){
+		ResultWithData result = new ResultWithData();		
+		businessunitService.updateBusinessunit(businessunit);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+	
+	@DELETE
+	@Path("/businessunits/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removeBusinessunit(@PathParam("id") int id){
+		ResultWithData result = new ResultWithData();
+		businessunitService.removeBusinessunit(id);
+		result.setStatus(REST_STATUS_SUCCESS);		
+		return Response.status(Status.OK)
+				.entity(new GenericEntity<ResultWithData>(result){})
+				.build();
+	}
+	
+	
+	
+	/**********BusinessUnit APIs end***********/
+	
+	/*This for developer testing that need to be deleted if no more necessary*/
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -129,6 +189,8 @@ public class RestController {
 		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
 		return Response.status(Status.OK).entity(entity).build();
 	}
+	
+	
 	
 	
 	
