@@ -25,8 +25,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.pmt.model.Businessunit;
+import com.pmt.model.Employee;
 import com.pmt.model.Skill;
 import com.pmt.service.BusinessunitService;
+import com.pmt.service.EmployeeService;
 import com.pmt.service.SkillService;
 import com.pmt.util.response.ResultWithData;
 import com.pmt.util.response.ResultWithData;
@@ -58,6 +60,10 @@ public class RestController {
 	@Autowired
 	@Qualifier("businessunitServiceImpl")
 	private BusinessunitService businessunitService;
+	
+	@Autowired
+	@Qualifier("employeeServiceImpl")
+	private EmployeeService employeeService;
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -179,10 +185,54 @@ public class RestController {
 	
 	/**********Location APIs End***********/
 	
-	/**********Client APIs Start***********/
+	/**********Employee APIs Start***********/
+	@GET
+	@Path("/employees")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEmployees(){
+		ResultWithData result = new ResultWithData();
+		List<Employee> employees = employeeService.listEmployees();
+		result.setStatus(REST_STATUS_SUCCESS);
+		result.setData(employees);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		return Response.status(Status.OK).entity(entity).build();
+	}
 	
+	@POST
+	@Path("/employees")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addEmployee(Employee employee){
+		ResultWithData result = new ResultWithData();
+		employeeService.addEmployee(employee);
+		result.setStatus(REST_STATUS_SUCCESS);		
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		return Response.status(Status.OK).entity(entity).build();
+	}
 	
-	/**********Client APIs End***********/
+	@PUT
+	@Path("/employees")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateEmployee(Employee employee){
+		ResultWithData result = new ResultWithData();
+		employeeService.updateEmployee(employee);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+	
+	@DELETE
+	@Path("/employees/{id}")
+	public Response removeEmployee(@PathParam("id") String id){
+		ResultWithData result = new ResultWithData();
+		employeeService.removeEmployee(id);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+	
+	/**********Employee APIs End***********/
 	
 	/*This for developer testing that need to be deleted if no more necessary*/
 	@GET
@@ -190,8 +240,7 @@ public class RestController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/testrespbld")
 	public Response testResponseBuilder(){
-		String[] forex = {"first","second"};
-		
+		String[] forex = {"first","second"};		
 		ResultWithData result = new ResultWithData();		
 		result.setStatus(forex[5]);
 		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};

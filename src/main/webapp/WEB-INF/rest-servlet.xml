@@ -35,6 +35,7 @@
             <list>
                 <value>com.pmt.model.Skill</value>
                 <value>com.pmt.model.Businessunit</value>
+                <value>com.pmt.model.Employee</value>
             </list>
         </property>
         <property name="hibernateProperties">
