@@ -170,11 +170,19 @@ public class RestController {
 		return Response.status(Status.OK)
 				.entity(new GenericEntity<ResultWithData>(result){})
 				.build();
-	}
-	
-	
+	}	
 	
 	/**********BusinessUnit APIs end***********/
+	
+	/**********Location APIs Start***********/
+	
+	
+	/**********Location APIs End***********/
+	
+	/**********Client APIs Start***********/
+	
+	
+	/**********Client APIs End***********/
 	
 	/*This for developer testing that need to be deleted if no more necessary*/
 	@GET
