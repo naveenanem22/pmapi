@@ -1,9 +1,13 @@
 package com.pmt.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="employee")
@@ -25,12 +29,21 @@ public class Employee {
 	@Column(name="emp_maritalstatus")
 	private String maritalStatus;
 	
+	@Temporal(TemporalType.DATE)
 	@Column(name="emp_dob")
-	private String dob;
+	private Date dob;
 	
 	
 	public Employee(){
 		
+	}
+
+	public Date getDob() {
+		return dob;
+	}
+
+	public void setDob(Date dob) {
+		this.dob = dob;
 	}
 
 	public String getId() {
@@ -72,18 +85,6 @@ public class Employee {
 	public void setMaritalStatus(String maritalStatus) {
 		this.maritalStatus = maritalStatus;
 	}
-
-	public String getDob() {
-		return dob;
-	}
-
-	public void setDob(String dob) {
-		this.dob = dob;
-	}
-	
-	
-	
-	
 	
 	
 
