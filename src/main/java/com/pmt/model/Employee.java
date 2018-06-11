@@ -29,7 +29,7 @@ public class Employee {
 	@Column(name="emp_maritalstatus")
 	private String maritalStatus;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.DATE)//This is mapped to emp_dob(of DATE datatype) of employee table in mysql 
 	@Column(name="emp_dob")
 	private Date dob;
 	
