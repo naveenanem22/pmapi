@@ -2,13 +2,12 @@ package com.pmt.dao;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pmt.model.Employee;
 
@@ -23,7 +22,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
         this.sessionFactory = sessionFactory;
     }
 
-	@Override	
+	@Override
+	@Transactional
 	public void addEmployee(Employee employee) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.saveOrUpdate(employee);
@@ -31,12 +31,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	
 
 	@Override
+	@Transactional
 	public void updateEmployee(Employee employee) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.update(employee);
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<Employee> listEmployees() {
 		Session session = this.sessionFactory.getCurrentSession();
 		return session.createQuery("from Employee").list();
@@ -44,12 +46,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public Employee getEmployeeById(String id) {
 		Session session = this.sessionFactory.getCurrentSession();
 		return (Employee) session.load(Employee.class, id);		
 	}
 
 	@Override
+	@Transactional
 	public void removeEmployee(String id) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.delete(session.load(Employee.class, id));
