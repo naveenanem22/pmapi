@@ -40,7 +40,7 @@ public class Employee {
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="emp_createddate")
+	@Column(name="emp_createddate", updatable = false)// updatable=true is necessary even though @CreationTimestamp is present 
 	private Date createdDate;
 	
 	@UpdateTimestamp
