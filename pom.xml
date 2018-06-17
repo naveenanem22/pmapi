@@ -35,19 +35,19 @@
     	<version>5.3.1.Final</version>
 		</dependency>
 		
-		<dependency>
+		<dependency><!--J2EE - JPA implementation -->
     	<groupId>org.hibernate.javax.persistence</groupId>
     	<artifactId>hibernate-jpa-2.1-api</artifactId>
     	<version>1.0.2.Final</version>
 		</dependency>
 		
-		<dependency>
+		<dependency><!--J2EE - Bean Validation implementation -->
     	<groupId>org.hibernate</groupId>
     	<artifactId>hibernate-validator</artifactId>
     	<version>5.3.1.Final</version>
 		</dependency>
 		
-		<dependency>
+		<dependency><!--J2EE - Bean Validation implementation -->
     	<groupId>org.hibernate</groupId>
     	<artifactId>hibernate-validator-annotation-processor</artifactId>
     	<version>5.3.1.Final</version>
@@ -78,7 +78,7 @@
 		<!-- Hibernate support dependencies end -->
 		
 		<!-- Mysql Jdbc connector dependencies start-->
-		<dependency>
+		<dependency><!--J2EE - JDBC implementation -->
     	<groupId>mysql</groupId>
     	<artifactId>mysql-connector-java</artifactId>
     	<version>5.1.6</version>
@@ -86,7 +86,7 @@
 		<!-- Mysql Jdbc connector dependencies end-->
 		
 		<!-- Jersey dependencies start-->
-		<dependency>
+		<dependency><!--J2EE - JAX-RS implementation -->
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-server</artifactId>
 			<version>1.8</version>
@@ -138,7 +138,7 @@
     	<scope>test</scope>
 		</dependency>
 		
-		<dependency>
+		<dependency><!--J2EE - JTA implementation and more-->
     	<groupId>org.springframework</groupId>
     	<artifactId>spring-tx</artifactId>
     	<version>4.2.1.RELEASE</version>
