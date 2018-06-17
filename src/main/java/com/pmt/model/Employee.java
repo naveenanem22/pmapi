@@ -10,9 +10,16 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
+import javax.validation.constraints.Size;
+
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.UpdateTimestamp;
+
+import com.pmt.common.PMAPIConstants;
+import com.pmt.validators.ContactNumberConstraint;
+import com.pmt.validators.GenderConstraint;
 
 @Entity
 @Table(name="employee")
@@ -23,15 +30,17 @@ public class Employee {
 	private String id;
 	
 	@Column(name="emp_firstname")
+	@Size(min = 1, max = 25, message = "The length of firstName should be between 1 to 25")
 	private String firstName;
 	
 	@Column(name="emp_lastname")
 	private String lastName;
 	
 	@Column(name="emp_gender")
+	@GenderConstraint
 	private String gender;
 	
-	@Column(name="emp_maritalstatus")
+	@Column(name="emp_maritalstatus")	
 	private String maritalStatus;
 	
 	@Temporal(TemporalType.DATE)//This is mapped to emp_dob(of DATE datatype) of employee table in mysql 
