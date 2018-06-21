@@ -5,8 +5,12 @@ import java.text.SimpleDateFormat;
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
 
-import com.owlike.genson.Genson;
-import com.owlike.genson.GensonBuilder;
+
+
+
+
+//import com.owlike.genson.Genson;
+//import com.owlike.genson.GensonBuilder;
 
 /**
 * This is a supporting class for issues with Date Deserialization/Serialization 
@@ -17,6 +21,22 @@ import com.owlike.genson.GensonBuilder;
 * @since   2017-01-01 
 */
 @Provider
+public class GensonProvider {/*implements ContextResolver<ObjectMapper>{
+	private final ObjectMapper objectMapper = new ObjectMapper();
+	
+	public GensonProvider() {
+    	
+    }
+
+	@Override
+	public ObjectMapper getContext(Class<?> type) {
+		return objectMapper;
+	}*/
+
+}
+
+
+/*@Provider
 public class GensonProvider implements ContextResolver<Genson>{
 	private final Genson genson = new GensonBuilder()
     .useDateAsTimestamp(false)
@@ -25,7 +45,8 @@ public class GensonProvider implements ContextResolver<Genson>{
 
 	@Override
 	public Genson getContext(Class<?> type) {
-		return genson;
-	}
+		return genson;	
 
-}
+}*/
+
+

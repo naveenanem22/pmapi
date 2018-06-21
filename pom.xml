@@ -86,13 +86,18 @@
 		<!-- Mysql Jdbc connector dependencies end-->
 		
 		<!-- Jersey dependencies start-->
-		<dependency><!--J2EE - JAX-RS implementation -->
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-server</artifactId>
-			<version>1.8</version>
-		</dependency>		
-		
-		<!-- Jersey dependencies end-->
+		<dependency>
+    		<groupId>org.glassfish.jersey.containers</groupId>
+    		<artifactId>jersey-container-servlet</artifactId>
+    		<version>2.27</version>
+		</dependency>
+		<dependency>
+    		<groupId>org.glassfish.jersey.media</groupId>
+    		<artifactId>jersey-media-json-jackson</artifactId>
+    		<version>2.27</version>
+		</dependency>
+				
+		<!-- Jersey dependencies end-->		
 		
 		<!-- Spring 4.2.1 dependencies start-->
 		<dependency>
@@ -195,9 +200,9 @@
 
 		<!-- Jersey + Spring dependencies start-->
 		<dependency>
-			<groupId>com.sun.jersey.contribs</groupId>
-			<artifactId>jersey-spring</artifactId>
-			<version>1.8</version>
+			<groupId>org.glassfish.jersey.ext</groupId>
+    		<artifactId>jersey-spring4</artifactId>
+    		<version>2.27</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework</groupId>
@@ -232,11 +237,11 @@
 		<!-- Jersey + Spring dependencies end-->
 		
 		<!-- JSON converter dependencies start-->
-		<dependency>
+		<!-- <dependency>
   		<groupId>com.owlike</groupId>
   		<artifactId>genson</artifactId>
   		<version>1.4</version>
-		</dependency>
+		</dependency> -->
 		<!-- JSON converter dependencies end-->
 		
 		<!-- Apache log4j dependencies start -->

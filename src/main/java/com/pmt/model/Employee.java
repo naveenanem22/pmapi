@@ -17,6 +17,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.UpdateTimestamp;
 
+
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pmt.common.PMAPIConstants;
 import com.pmt.validators.ContactNumberConstraint;
 import com.pmt.validators.GenderConstraint;
@@ -49,12 +52,14 @@ public class Employee {
 	
 	@CreationTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
 	@Column(name="emp_createddate", updatable = false)// updatable=true is necessary even though @CreationTimestamp is present 
 	private Date createdDate;
 	
 	@UpdateTimestamp
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="emp_updateddate")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
 	private Date updatedDate;
 	
 	
