@@ -2,16 +2,20 @@ package com.pmt.common;
 
 import static com.pmt.common.PMAPIConstants.REST_STATUS_FAILURE;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.ext.ExceptionMapper;
 import javax.ws.rs.ext.Provider;
 
+
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import com.pmt.controller.RestController;
+import com.pmt.model.ErrorResponse;
 import com.pmt.util.response.ResultWithData;
 
 /** Global exception-mapper to catch unchecked exceptions across all the REST APIs part of pmapi.
@@ -32,12 +36,13 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable>{
 	* @return {"data": null, "status": "Success"}
 	*/
 	@Override
-	public Response toResponse(Throwable ex) {
-		logger.debug(ex);
-		ResultWithData result = new ResultWithData();		
-		result.setStatus(REST_STATUS_FAILURE);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
-		return Response.status(Status.INTERNAL_SERVER_ERROR).entity(entity).build();
-	}
+	public Response toResponse(Throwable ex) {		
+			ResultWithData result = new ResultWithData();		
+			result.setStatus(REST_STATUS_FAILURE);			
+			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(entity).build();		
+		
+	}	
+	
 
 }
