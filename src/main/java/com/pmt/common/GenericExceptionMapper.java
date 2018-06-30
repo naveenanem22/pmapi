@@ -2,8 +2,6 @@ package com.pmt.common;
 
 import static com.pmt.common.PMAPIConstants.REST_STATUS_FAILURE;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.ConstraintViolationException;
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -14,8 +12,6 @@ import javax.ws.rs.ext.Provider;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
-import com.pmt.controller.RestController;
-import com.pmt.model.ErrorResponse;
 import com.pmt.util.response.ResultWithData;
 
 /** Global exception-mapper to catch unchecked exceptions across all the REST APIs part of pmapi.
