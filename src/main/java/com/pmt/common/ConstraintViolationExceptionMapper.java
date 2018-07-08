@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 
 import com.pmt.model.ValidationError;
+import com.pmt.util.propertyfilehandlers.AppErrorProperties;
 import com.pmt.util.response.ResultWithData;
 
 @Provider
@@ -45,19 +46,23 @@ public class ConstraintViolationExceptionMapper
     private ValidationError toValidationError(ConstraintViolation constraintViolation) {        
     	ValidationError error = (ValidationError) applicationContext.getBean("validationError");
         
-        return setValues(error,constraintViolation.getPropertyPath().toString());
-        //error.setPath(constraintViolation.getPropertyPath().toString());
-        //error.setMessage(constraintViolation.getMessage());
+        return setValues(error,constraintViolation.getMessage());       
         
     }
-    private ValidationError setValues(ValidationError error, String propPath){
-    	switch(propPath){
+    private ValidationError setValues(ValidationError error, String messageBasedKey){
+    	AppErrorProperties aep = (AppErrorProperties) applicationContext.getBean("appErrorProp");
+    	error.setDeveloperMsg(aep.getProperty(messageBasedKey+".dev.msg"));
+    	error.setErrCode(aep.getProperty(messageBasedKey+".err.code"));
+    	error.setMoreInfo(aep.getProperty(messageBasedKey+".more.info"));
+    	error.setUserMsg(aep.getProperty(messageBasedKey+".user.msg"));
+    	error.setPropertyPath(messageBasedKey);
+    	/*switch(message){
     	
     	case "gender":
-    		error.setDeveloperMsg(PMAPIConstants.EMP_GENDER_DEV_MSG);
-    		error.setErrCode(PMAPIConstants.EMP_GENDER_ERR_CODE);
-    		error.setMoreInfo(PMAPIConstants.EMP_GENDER_MORE_INFO);
-    		error.setPropertyPath("gender");
+    		error.setDeveloperMsg(aep.getProperty("sample"));
+    		error.setErrCode(aep.getProperty("gender.values.male"));
+    		error.setMoreInfo(aep.getProperty("gender.values.female"));
+    		error.setPropertyPath(aep.getProperty("gender.more.info"));
     		error.setUserMsg(PMAPIConstants.EMP_GENDER_USR_MSG);
     		break;
     	case "firstName":
@@ -70,7 +75,7 @@ public class ConstraintViolationExceptionMapper
     	
     	default :
     		break;   	
-    	}
+    	}*/
     	return error;
     }
 }

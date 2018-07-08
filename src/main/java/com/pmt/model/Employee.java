@@ -33,14 +33,14 @@ public class Employee {
 	private String id;
 	
 	@Column(name="emp_firstname")
-	@Size(min = 1, max = 25, message = "The length of firstName should be between 1 to 25")
+	@Size(min = 1, max = 25, message = "firstName")
 	private String firstName;
 	
 	@Column(name="emp_lastname")
 	private String lastName;
 	
 	@Column(name="emp_gender")
-	@GenderConstraint
+	@GenderConstraint(message = "gender")
 	private String gender;
 	
 	@Column(name="emp_maritalstatus")	
