@@ -19,10 +19,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 
 
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.pmt.common.PMAPIConstants;
 import com.pmt.validators.ContactNumberConstraint;
 import com.pmt.validators.GenderConstraint;
+import com.pmt.validators.MaritalStatusConstraint;
 
 @Entity
 @Table(name="employee")
@@ -43,7 +45,8 @@ public class Employee {
 	@GenderConstraint(message = "gender")
 	private String gender;
 	
-	@Column(name="emp_maritalstatus")	
+	@Column(name="emp_maritalstatus")
+	@MaritalStatusConstraint(message = "maritalStatus")
 	private String maritalStatus;
 	
 	@Temporal(TemporalType.DATE)//This is mapped to emp_dob(of DATE datatype) of employee table in mysql 

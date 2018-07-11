@@ -56,26 +56,7 @@ public class ConstraintViolationExceptionMapper
     	error.setMoreInfo(aep.getProperty(messageBasedKey+".more.info"));
     	error.setUserMsg(aep.getProperty(messageBasedKey+".user.msg"));
     	error.setPropertyPath(messageBasedKey);
-    	/*switch(message){
     	
-    	case "gender":
-    		error.setDeveloperMsg(aep.getProperty("sample"));
-    		error.setErrCode(aep.getProperty("gender.values.male"));
-    		error.setMoreInfo(aep.getProperty("gender.values.female"));
-    		error.setPropertyPath(aep.getProperty("gender.more.info"));
-    		error.setUserMsg(PMAPIConstants.EMP_GENDER_USR_MSG);
-    		break;
-    	case "firstName":
-    		error.setErrCode(PMAPIConstants.EMP_MARITAL_STATUS_ERR_CODE);
-    		error.setDeveloperMsg(PMAPIConstants.EMP_MARITAL_STATUS_DEV_MSG);
-    		error.setMoreInfo(PMAPIConstants.EMP_MARITAL_STATUS_MORE_INFO);
-    		error.setPropertyPath("maritalstatus");
-    		error.setUserMsg(PMAPIConstants.EMP_MARITAL_STATUS_USR_MSG);
-    		break;   	
-    	
-    	default :
-    		break;   	
-    	}*/
     	return error;
     }
 }
