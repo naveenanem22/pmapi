@@ -41,6 +41,7 @@
                 <value>com.pmt.model.Skill</value>
                 <value>com.pmt.model.Businessunit</value>
                 <value>com.pmt.model.Employee</value>
+                <value>com.pmt.model.EmpEducation</value>
             </list>
         </property>
         <property name="hibernateProperties">

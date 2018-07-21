@@ -10,6 +10,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pmt.validators.ScoreTypeConstraint;
 
 @Entity
@@ -17,33 +18,41 @@ import com.pmt.validators.ScoreTypeConstraint;
 public class EmpEducation {
 	@Id
 	@Column(name="edu_id")
+	@JsonProperty(value="id")
 	private String id;
 	
 	@Column(name="edu_empid")
 	private String empId;
 	
 	@Column(name="edu_qualname")
+	@JsonProperty(value="qualificationName")
 	private String qualName;
 	
 	@Column(name="edu_specialization")
+	@JsonProperty(value="spec")
 	private String specialization;
 	
 	@Column(name="edu_startdate")
 	@Temporal(TemporalType.DATE)
+	@JsonProperty(value="qualStartDate")
 	private Date qualStartDate;
 	
 	@Column(name="edu_enddate")
-	@Temporal(TemporalType.DATE)	
+	@Temporal(TemporalType.DATE)
+	@JsonProperty(value="qualEndDate")
 	private Date qualEndDate;
 	
-	@Column(name="edu_score")
-	@ScoreTypeConstraint(message = "scoreType")
+	@Column(name="edu_score")	
+	@JsonProperty(value="score")
 	private float score;
 	
 	@Column(name="edu_scoretype")
+	//@ScoreTypeConstraint(message = "scoreType")
+	@JsonProperty(value="scoreType")
 	private String scoreType;
 	
 	@Column(name="edu_institution")
+	@JsonProperty(value="institution")
 	private String institution;
 	
 	public EmpEducation(){

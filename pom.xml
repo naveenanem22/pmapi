@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.techietipps.api</groupId>
@@ -8,98 +9,111 @@
 	<name>pmapi</name>
 	<url>http://maven.apache.org</url>
 
+	<properties>
+		<jackson.version>2.27</jackson.version>
+		<commonslang.version>3.7</commonslang.version>
+	</properties>
+
 
 	<dependencies>
-	
-	    <!-- JUnit dependencies start-->
-        <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>3.8.1</version>
-                <scope>test</scope>
-        </dependency>        
-        <!-- JUnit dependencies end-->
-        
-        <!--J2EE related APIs start-->
-        <dependency> <!--Hibernate implementation of this specification is included -->
-    	<groupId>javax.validation</groupId>
-    	<artifactId>validation-api</artifactId>
-    	<version>2.0.0.Final</version>
-		</dependency>
-        <!--J2EE related APIs end-->
-		
-		<!-- Hibernate dependencies start-->
+
+		<!-- JUnit dependencies start -->
 		<dependency>
-    	<groupId>org.hibernate</groupId>
-    	<artifactId>hibernate-core</artifactId>
-    	<version>5.3.1.Final</version>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>3.8.1</version>
+			<scope>test</scope>
 		</dependency>
-		
+		<!-- JUnit dependencies end -->
+
+		<!-- Apache Util dependencies start -->
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commonslang.version}</version>
+		</dependency>
+		<!-- Apache Util dependencies end -->
+
+		<!--J2EE related APIs start -->
+		<dependency> <!--Hibernate implementation of this specification is included -->
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
+			<version>2.0.0.Final</version>
+		</dependency>
+		<!--J2EE related APIs end -->
+
+		<!-- Hibernate dependencies start -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>5.3.1.Final</version>
+		</dependency>
+
 		<dependency><!--J2EE - JPA implementation -->
-    	<groupId>org.hibernate.javax.persistence</groupId>
-    	<artifactId>hibernate-jpa-2.1-api</artifactId>
-    	<version>1.0.2.Final</version>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.1-api</artifactId>
+			<version>1.0.2.Final</version>
 		</dependency>
-		
+
 		<dependency><!--J2EE - Bean Validation implementation -->
-    	<groupId>org.hibernate</groupId>
-    	<artifactId>hibernate-validator</artifactId>
-    	<version>5.3.1.Final</version>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.3.1.Final</version>
 		</dependency>
-		
+
 		<dependency><!--J2EE - Bean Validation implementation -->
-    	<groupId>org.hibernate</groupId>
-    	<artifactId>hibernate-validator-annotation-processor</artifactId>
-    	<version>5.3.1.Final</version>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator-annotation-processor</artifactId>
+			<version>5.3.1.Final</version>
 		</dependency>
-				
-		<!-- Hibernate dependencies end-->
-		
+
+		<!-- Hibernate dependencies end -->
+
 		<!-- Hibernate support dependencies start -->
 		<!-- commons-logging -->
 		<dependency>
-    	<groupId>commons-logging</groupId>
-    	<artifactId>commons-logging</artifactId>
-    	<version>1.2</version>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
 		</dependency>
-		
+
 		<!-- dom 4j -->
 		<dependency>
-    	<groupId>dom4j</groupId>
-    	<artifactId>dom4j</artifactId>
-    	<version>1.6.1</version>
+			<groupId>dom4j</groupId>
+			<artifactId>dom4j</artifactId>
+			<version>1.6.1</version>
 		</dependency>
-		
+
 		<dependency>
-    	<groupId>org.jboss.logging</groupId>
-    	<artifactId>jboss-logging</artifactId>
-    	<version>3.3.0.Final</version>
+			<groupId>org.jboss.logging</groupId>
+			<artifactId>jboss-logging</artifactId>
+			<version>3.3.0.Final</version>
 		</dependency>
 		<!-- Hibernate support dependencies end -->
-		
-		<!-- Mysql Jdbc connector dependencies start-->
+
+		<!-- Mysql Jdbc connector dependencies start -->
 		<dependency><!--J2EE - JDBC implementation -->
-    	<groupId>mysql</groupId>
-    	<artifactId>mysql-connector-java</artifactId>
-    	<version>5.1.6</version>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.6</version>
 		</dependency>
-		<!-- Mysql Jdbc connector dependencies end-->
-		
-		<!-- Jersey dependencies start-->
+		<!-- Mysql Jdbc connector dependencies end -->
+
+		<!-- Jersey dependencies start -->
 		<dependency>
-    		<groupId>org.glassfish.jersey.containers</groupId>
-    		<artifactId>jersey-container-servlet</artifactId>
-    		<version>2.27</version>
+			<groupId>org.glassfish.jersey.containers</groupId>
+			<artifactId>jersey-container-servlet</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
 		<dependency>
-    		<groupId>org.glassfish.jersey.media</groupId>
-    		<artifactId>jersey-media-json-jackson</artifactId>
-    		<version>2.27</version>
+			<groupId>org.glassfish.jersey.media</groupId>
+			<artifactId>jersey-media-json-jackson</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
-				
-		<!-- Jersey dependencies end-->		
-		
-		<!-- Spring 4.2.1 dependencies start-->
+
+		<!-- Jersey dependencies end -->
+
+		<!-- Spring 4.2.1 dependencies start -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
@@ -117,92 +131,92 @@
 			<artifactId>spring-web</artifactId>
 			<version>4.2.1.RELEASE</version>
 		</dependency>
-		
-		<dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-aop</artifactId>
-    	<version>4.2.1.RELEASE</version>
-		</dependency>
-		
-		<dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-jdbc</artifactId>
-    	<version>4.2.1.RELEASE</version>
-		</dependency>
-		
-		<dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-orm</artifactId>
-    	<version>4.2.1.RELEASE</version>
-		</dependency>
-		
-		<dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-test</artifactId>
-    	<version>4.2.1.RELEASE</version>
-    	<scope>test</scope>
-		</dependency>
-		
-		<dependency><!--J2EE - JTA implementation and more-->
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-tx</artifactId>
-    	<version>4.2.1.RELEASE</version>
-		</dependency>
-		
-		<dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-webmvc</artifactId>
-    	<version>4.2.1.RELEASE</version>
-		</dependency>
-		
-		<dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-aspects</artifactId>
-    	<version>4.2.1.RELEASE</version>
-		</dependency>
-		
-		<dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-context-support</artifactId>
-    	<version>4.2.1.RELEASE</version>
-		</dependency>
-		
-		<dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-instrument-tomcat</artifactId>
-    	<version>4.2.1.RELEASE</version>
-		</dependency>
-		
-		<dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-jms</artifactId>
-    	<version>4.2.1.RELEASE</version>
-		</dependency>
-		
-		<dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-messaging</artifactId>
-    	<version>4.2.1.RELEASE</version>
-		</dependency>
-		
-		<dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-webmvc-portlet</artifactId>
-    	<version>4.2.1.RELEASE</version>
-		</dependency>
-		
-		<dependency>
-    	<groupId>org.springframework</groupId>
-    	<artifactId>spring-websocket</artifactId>
-    	<version>4.2.1.RELEASE</version>
-		</dependency>
-		<!-- Spring 4.2.1 dependencies end-->
 
-		<!-- Jersey + Spring dependencies start-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+			<version>4.2.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>4.2.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>4.2.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.2.1.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency><!--J2EE - JTA implementation and more -->
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>4.2.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>4.2.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aspects</artifactId>
+			<version>4.2.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>4.2.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-instrument-tomcat</artifactId>
+			<version>4.2.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jms</artifactId>
+			<version>4.2.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-messaging</artifactId>
+			<version>4.2.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc-portlet</artifactId>
+			<version>4.2.1.RELEASE</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-websocket</artifactId>
+			<version>4.2.1.RELEASE</version>
+		</dependency>
+		<!-- Spring 4.2.1 dependencies end -->
+
+		<!-- Jersey + Spring dependencies start -->
 		<dependency>
 			<groupId>org.glassfish.jersey.ext</groupId>
-    		<artifactId>jersey-spring4</artifactId>
-    		<version>2.27</version>
+			<artifactId>jersey-spring4</artifactId>
+			<version>2.27</version>
 			<exclusions>
 				<exclusion>
 					<groupId>org.springframework</groupId>
@@ -234,21 +248,18 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<!-- Jersey + Spring dependencies end-->
-		
-		<!-- JSON converter dependencies start-->
-		<!-- <dependency>
-  		<groupId>com.owlike</groupId>
-  		<artifactId>genson</artifactId>
-  		<version>1.4</version>
-		</dependency> -->
-		<!-- JSON converter dependencies end-->
-		
+		<!-- Jersey + Spring dependencies end -->
+
+		<!-- JSON converter dependencies start -->
+		<!-- <dependency> <groupId>com.owlike</groupId> <artifactId>genson</artifactId> 
+			<version>1.4</version> </dependency> -->
+		<!-- JSON converter dependencies end -->
+
 		<!-- Apache log4j dependencies start -->
 		<dependency>
-    	<groupId>log4j</groupId>
-    	<artifactId>log4j</artifactId>
-    	<version>1.2.17</version>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
 		</dependency>
 		<!-- log4j dependencies end -->
 	</dependencies>

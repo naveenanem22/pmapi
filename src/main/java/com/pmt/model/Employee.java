@@ -21,6 +21,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pmt.common.PMAPIConstants;
 import com.pmt.validators.ContactNumberConstraint;
 import com.pmt.validators.GenderConstraint;
@@ -35,7 +36,7 @@ public class Employee {
 	private String id;
 	
 	@Column(name="emp_firstname")
-	@Size(min = 1, max = 25, message = "firstName")
+	@Size(min = 1, max = 25, message = "firstName")	
 	private String firstName;
 	
 	@Column(name="emp_lastname")
