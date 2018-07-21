@@ -47,7 +47,7 @@ public class EmpEducation {
 	private float score;
 	
 	@Column(name="edu_scoretype")
-	//@ScoreTypeConstraint(message = "scoreType")
+	@ScoreTypeConstraint(message = "scoreType")
 	@JsonProperty(value="scoreType")
 	private String scoreType;
 	
