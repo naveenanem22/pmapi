@@ -27,16 +27,7 @@ public class EmpEducationDaoImpl implements EmpEducationDao {
 	@Override
 	@Transactional
 	public void addEmpEducation(EmpEducation empEducation) {
-		Session session = this.sessionFactory.getCurrentSession();
-		/*EmpEducation empEducationLocal = new EmpEducation();
-		empEducationLocal.setEmpId("SKM001");
-		empEducationLocal.setId("1001");
-		empEducationLocal.setInstitution("gitam");
-		empEducationLocal.setQualName("electronics");
-		Employee employee = new Employee();
-		employee.setId("SKM0017");
-		employee.setFirstName("firsttesteducat");
-		employee.setLastName("lsteducat");*/
+		Session session = this.sessionFactory.getCurrentSession();		
 		session.saveOrUpdate(empEducation);
 	}	
 	
