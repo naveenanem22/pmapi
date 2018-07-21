@@ -22,38 +22,33 @@ public class EmployeeDaoImpl implements EmployeeDao {
         this.sessionFactory = sessionFactory;
     }
 
-	@Override
-	@Transactional
+	@Override	
 	public void addEmployee(Employee employee) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.saveOrUpdate(employee);
 	}	
 	
 
-	@Override
-	@Transactional
+	@Override	
 	public void updateEmployee(Employee employee) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.update(employee);
 	}
 
-	@Override
-	@Transactional(readOnly=true)
+	@Override	
 	public List<Employee> listEmployees() {
 		Session session = this.sessionFactory.getCurrentSession();
 		return session.createQuery("from Employee").list();
 		
 	}
 
-	@Override
-	@Transactional(readOnly=true)
+	@Override	
 	public Employee getEmployeeById(String id) {
 		Session session = this.sessionFactory.getCurrentSession();
 		return (Employee) session.load(Employee.class, id);		
 	}
 
-	@Override
-	@Transactional
+	@Override	
 	public void removeEmployee(String id) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.delete(session.load(Employee.class, id));

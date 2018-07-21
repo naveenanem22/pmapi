@@ -20,32 +20,32 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private EmployeeDao employeeDao;
 
 	@Override
-	@Transactional
+	@Transactional(value="hibernateTransactionManager")
 	public void addEmployee(Employee employee) {
 		this.employeeDao.addEmployee(employee);
 	}
 
 	@Override
-	@Transactional
+	@Transactional(value="hibernateTransactionManager")
 	public void updateEmployee(Employee employee) {
 		this.employeeDao.updateEmployee(employee);
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, value="hibernateTransactionManager")
 	public List<Employee> listEmployees() {
 		return this.employeeDao.listEmployees();
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, value="hibernateTransactionManager")
 	public Employee getEmployeeById(String id) {		
 		return this.employeeDao.getEmployeeById(id);
 	}
 	
 
 	@Override
-	@Transactional
+	@Transactional(value="hibernateTransactionManager")
 	public void removeEmployee(String id) {
 		this.employeeDao.removeEmployee(id);
 	}
