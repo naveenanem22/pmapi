@@ -9,6 +9,13 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+
+import javax.xml.bind.annotation.XmlRootElement;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.pmt.validators.ScoreTypeConstraint;
@@ -21,11 +28,12 @@ public class EmpEducation {
 	@JsonProperty(value="id")
 	private String id;
 	
-	@Column(name="edu_empid")
+	@Column(name="edu_empid")	
 	private String empId;
 	
 	@Column(name="edu_qualname")
 	@JsonProperty(value="qualificationName")
+	@NotBlank(message = "qualName")
 	private String qualName;
 	
 	@Column(name="edu_specialization")

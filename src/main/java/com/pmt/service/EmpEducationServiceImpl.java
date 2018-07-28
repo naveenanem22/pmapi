@@ -17,32 +17,32 @@ public class EmpEducationServiceImpl implements EmpEducationService {
 	private EmpEducationDao empEducationDao;
 
 	@Override
-	@Transactional
-	public void addEmpEducation(EmpEducation empEducation, String empId) {		
+	@Transactional(value = "jdbcTransactionManager")
+	public void addEmpEducation(EmpEducation empEducation, String empId) {
 		empEducation.setEmpId(empId);
 		this.empEducationDao.addEmpEducation(empEducation);
 	}
 
 	@Override
-	@Transactional
+	@Transactional(value = "jdbcTransactionManager")
 	public void updateEmpEducation(EmpEducation empEducation) {
 		this.empEducationDao.updateEmpEducation(empEducation);
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, value = "jdbcTransactionManager")
 	public List<EmpEducation> listEmpEducations() {
 		return this.empEducationDao.listEmpEducations();
 	}
 
 	@Override
-	@Transactional(readOnly = true)
+	@Transactional(readOnly = true, value = "jdbcTransactionManager")
 	public EmpEducation getEmpEducationById(String id) {
 		return this.empEducationDao.getEmpEducationById(id);
 	}
 
 	@Override
-	@Transactional
+	@Transactional(value = "jdbcTransactionManager")
 	public void removeEmpEducation(String id) {
 		this.empEducationDao.removeEmpEducation(id);
 	}

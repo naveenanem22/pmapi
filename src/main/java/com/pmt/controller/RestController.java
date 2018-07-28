@@ -2,6 +2,7 @@ package com.pmt.controller;
 
 import java.util.List;
 
+import javax.validation.Valid;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -20,14 +21,16 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-
-
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import com.pmt.model.Businessunit;
+import com.pmt.model.EmpEducation;
 import com.pmt.model.Employee;
 import com.pmt.model.Skill;
 import com.pmt.service.BusinessunitService;
+import com.pmt.service.EmpEducationService;
 import com.pmt.service.EmployeeService;
 import com.pmt.service.SkillService;
 import com.pmt.util.response.ResultWithData;
@@ -36,220 +39,292 @@ import com.pmt.util.response.ResultWithData;
 import static com.pmt.common.PMAPIConstants.*;
 
 /**
-* This is the main REST-Controller handling all the requests and responses
-* for various APIs across the application. 
-* 
-* The role is to receive and process requests from Dispatcher Servlet - 
-* com.sun.jersey.spi.spring.container.servlet.SpringServlet - declared as part of
-* web.xml. 
-* 
-* @author  Naveen Anem
-* @version 1.0
-* @since   2017-01-01 
-*/
+ * This is the main REST-Controller handling all the requests and responses for
+ * various APIs across the application.
+ * 
+ * The role is to receive and process requests from Dispatcher Servlet -
+ * com.sun.jersey.spi.spring.container.servlet.SpringServlet - declared as part
+ * of web.xml.
+ * 
+ * @author Naveen Anem
+ * @version 1.0
+ * @since 2017-01-01
+ */
 @Controller
 @Path("/projmgmt/V1/")
 public class RestController {
-	
+
 	private static final Logger logger = LogManager.getLogger(RestController.class);
-	
+
 	@Autowired
 	@Qualifier("skillServiceImpl")
 	private SkillService skillService;
-	
+
 	@Autowired
 	@Qualifier("businessunitServiceImpl")
 	private BusinessunitService businessunitService;
-	
+
 	@Autowired
 	@Qualifier("employeeServiceImpl")
 	private EmployeeService employeeService;
-	
+
+	@Autowired
+	@Qualifier("empEducationServiceImpl")
+	private EmpEducationService empEducationService;
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/healthcheck")
-	public Response healthCheck(){
-		
+	public Response healthCheck() {
+
 		ResultWithData result = new ResultWithData();
 		result.setStatus(REST_STATUS_SUCCESS);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-	
-	/**********Skill APIs start***********/
+
+	/********** Skill APIs start ***********/
 
 	@GET
 	@Path("/skills")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response listSkills() {		
+	public Response listSkills() {
 		ResultWithData result = new ResultWithData();
-		
-		List<Skill> skills =  skillService.listSkills();
+
+		List<Skill> skills = skillService.listSkills();
 		result.setStatus(REST_STATUS_SUCCESS);
 		result.setData(skills);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};		
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
 		return Response.ok(entity).build();
 	}
-	
+
 	@POST
 	@Path("/skills")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addSkill(Skill skill){		
-		ResultWithData result = new ResultWithData();		
+	public Response addSkill(Skill skill) {
+		ResultWithData result = new ResultWithData();
 		skillService.addSkill(skill);
-		result.setStatus(REST_STATUS_SUCCESS);				
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
 		return Response.ok(entity).build();
 	}
-	
+
 	@DELETE
 	@Path("/skills/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response removeSkill(@PathParam("id") int id){
+	public Response removeSkill(@PathParam("id") int id) {
 		ResultWithData result = new ResultWithData();
 		skillService.removeSkill(id);
 		result.setStatus(REST_STATUS_SUCCESS);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
 		return Response.ok(entity).build();
 	}
-	
+
 	@PUT
 	@Path("/skills")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateSkill(Skill skill){
-		ResultWithData result= new ResultWithData();
+	public Response updateSkill(Skill skill) {
+		ResultWithData result = new ResultWithData();
 		skillService.updateSkill(skill);
 		result.setStatus(REST_STATUS_SUCCESS);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
 		return Response.ok(entity).build();
 	}
-	
-	/**********Skill APIs end***********/
-	
-	/**********BusinessUnit APIs start***********/
-	
+
+	/********** Skill APIs end ***********/
+
+	/********** BusinessUnit APIs start ***********/
+
 	@GET
 	@Path("/businessunits")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getBusinessunits(){
+	public Response getBusinessunits() {
 		ResultWithData result = new ResultWithData();
 		List<Businessunit> businessunits = businessunitService.listBusinessunits();
 		result.setStatus(REST_STATUS_SUCCESS);
 		result.setData(businessunits);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-	
+
 	@POST
 	@Path("/businessunits")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addBusinessunit(Businessunit businessunit){
+	public Response addBusinessunit(Businessunit businessunit) {
 		ResultWithData result = new ResultWithData();
 		businessunitService.addBusinessunit(businessunit);
 		result.setStatus(REST_STATUS_SUCCESS);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-	
+
 	@PUT
 	@Path("/businessunits")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateBusinessunit(Businessunit businessunit){
-		ResultWithData result = new ResultWithData();		
+	public Response updateBusinessunit(Businessunit businessunit) {
+		ResultWithData result = new ResultWithData();
 		businessunitService.updateBusinessunit(businessunit);
 		result.setStatus(REST_STATUS_SUCCESS);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-	
+
 	@DELETE
 	@Path("/businessunits/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response removeBusinessunit(@PathParam("id") int id){
+	public Response removeBusinessunit(@PathParam("id") int id) {
 		ResultWithData result = new ResultWithData();
 		businessunitService.removeBusinessunit(id);
-		result.setStatus(REST_STATUS_SUCCESS);		
-		return Response.status(Status.OK)
-				.entity(new GenericEntity<ResultWithData>(result){})
-				.build();
-	}	
-	
-	/**********BusinessUnit APIs end***********/
-	
-	/**********Location APIs Start***********/
-	
-	
-	/**********Location APIs End***********/
-	
-	/**********Employee APIs Start***********/
+		result.setStatus(REST_STATUS_SUCCESS);
+		return Response.status(Status.OK).entity(new GenericEntity<ResultWithData>(result) {
+		}).build();
+	}
+
+	/********** BusinessUnit APIs end ***********/
+
+	/********** Location APIs Start ***********/
+
+	/********** Location APIs End ***********/
+
+	/********** Employee APIs Start ***********/
 	@GET
 	@Path("/employees")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getEmployees(){
+	public Response getEmployees() {
 		ResultWithData result = new ResultWithData();
 		List<Employee> employees = employeeService.listEmployees();
 		result.setStatus(REST_STATUS_SUCCESS);
 		result.setData(employees);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-	
+
 	@POST
 	@Path("/employees")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addEmployee(Employee employee){
+	public Response addEmployee(@Valid Employee employee) {
 		ResultWithData result = new ResultWithData();
 		employeeService.addEmployee(employee);
-		result.setStatus(REST_STATUS_SUCCESS);		
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-	
+
 	@PUT
 	@Path("/employees")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateEmployee(Employee employee){
+	public Response updateEmployee(Employee employee) {
 		ResultWithData result = new ResultWithData();
 		employeeService.updateEmployee(employee);
 		result.setStatus(REST_STATUS_SUCCESS);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-	
+
 	@DELETE
 	@Path("/employees/{id}")
-	public Response removeEmployee(@PathParam("id") String id){
+	public Response removeEmployee(@PathParam("id") String id) {
 		ResultWithData result = new ResultWithData();
 		employeeService.removeEmployee(id);
 		result.setStatus(REST_STATUS_SUCCESS);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+
+	/********** Employee APIs End ***********/
+
+	/********** EmpEducation APIs Start ***********/
+	@GET
+	@Path("/employees/{id}/qualification")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEmpEducations(@PathParam("id") String id) {
+		ResultWithData result = new ResultWithData();
+		EmpEducation empEducation = empEducationService.getEmpEducationById(id);
+		result.setStatus(REST_STATUS_SUCCESS);
+		result.setData(empEducation);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+
+	@POST
+	@Path("/employees/{id}/qualification")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)	
+	public Response addEmpEducation(@Valid List<EmpEducation> empEducation, @PathParam("id") String empId) {		
+		ResultWithData result = new ResultWithData();
+					
+		empEducationService.addEmpEducation(empEducation.get(0), empId);
+		empEducationService.addEmpEducation(empEducation.get(1), empId);
+		empEducationService.addEmpEducation(empEducation.get(2), empId);
+		
+		
+		
+		
+		
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
 	
-	/**********Employee APIs End***********/
-	
-	/*This for developer testing that need to be deleted if no more necessary*/
+
+	/*
+	 * @PUT
+	 * 
+	 * @Path("/employees")
+	 * 
+	 * @Consumes(MediaType.APPLICATION_JSON)
+	 * 
+	 * @Produces(MediaType.APPLICATION_JSON) public Response updateEmployee(Employee
+	 * employee){ ResultWithData result = new ResultWithData();
+	 * employeeService.updateEmployee(employee);
+	 * result.setStatus(REST_STATUS_SUCCESS); GenericEntity<ResultWithData> entity =
+	 * new GenericEntity<ResultWithData>(result){}; return
+	 * Response.status(Status.OK).entity(entity).build(); }
+	 * 
+	 * @DELETE
+	 * 
+	 * @Path("/employees/{id}") public Response removeEmployee(@PathParam("id")
+	 * String id){ ResultWithData result = new ResultWithData();
+	 * employeeService.removeEmployee(id); result.setStatus(REST_STATUS_SUCCESS);
+	 * GenericEntity<ResultWithData> entity = new
+	 * GenericEntity<ResultWithData>(result){}; return
+	 * Response.status(Status.OK).entity(entity).build(); }
+	 */
+
+	/********** EmpEducation APIs End ***********/
+
+	/* This for developer testing that need to be deleted if no more necessary */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/testrespbld")
-	public Response testResponseBuilder(){
-		String[] forex = {"first","second"};		
-		ResultWithData result = new ResultWithData();		
+	public Response testResponseBuilder() {
+		String[] forex = { "first", "second" };
+		ResultWithData result = new ResultWithData();
 		result.setStatus(forex[5]);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result){};
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-	
-	
-	
-	
-	
 
 }

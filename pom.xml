@@ -12,6 +12,7 @@
 	<properties>
 		<jackson.version>2.27</jackson.version>
 		<commonslang.version>3.7</commonslang.version>
+		<jersey.vesion>2.27</jersey.vesion>
 	</properties>
 
 
@@ -109,6 +110,16 @@
 			<groupId>org.glassfish.jersey.media</groupId>
 			<artifactId>jersey-media-json-jackson</artifactId>
 			<version>${jackson.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.ext</groupId>
+			<artifactId>jersey-bean-validation</artifactId>
+			<version>${jersey.vesion}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.glassfish.jersey.inject</groupId>
+			<artifactId>jersey-hk2</artifactId>
+			<version>${jersey.vesion}</version>
 		</dependency>
 
 		<!-- Jersey dependencies end -->
