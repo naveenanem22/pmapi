@@ -7,8 +7,8 @@ import com.pmt.model.EmpEducation;
 public interface EmpEducationDao {
 	
 	public void addEmpEducation(EmpEducation empEducation);
-    public void updateEmpEducation(EmpEducation empEducation);
-    public List<EmpEducation> listEmpEducations();
+    public void updateEmpEducationsByEmployeeId(List<EmpEducation> empEducations, String empId);
+    public List<EmpEducation> listEmpEducationsByEmployeeId(String employeeId);
     public EmpEducation getEmpEducationById(String id);
     public void removeEmpEducation(String id);        
 

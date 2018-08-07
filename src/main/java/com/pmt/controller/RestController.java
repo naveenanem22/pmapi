@@ -253,54 +253,48 @@ public class RestController {
 
 	/********** EmpEducation APIs Start ***********/
 	@GET
-	@Path("/employees/{id}/qualification")
+	@Path("/employees/{id}/qualifications")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getEmpEducations(@PathParam("id") String id) {
+	public Response getEmpEducations(@PathParam("id") String employeeId) {
 		ResultWithData result = new ResultWithData();
-		EmpEducation empEducation = empEducationService.getEmpEducationById(id);
+		// EmpEducation empEducation = empEducationService.getEmpEducationById(id);
+		List<EmpEducation> empEducations = empEducationService.listEmpEducationsByEmployeeId(employeeId);
 		result.setStatus(REST_STATUS_SUCCESS);
-		result.setData(empEducation);
+		result.setData(empEducations);
 		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
 		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
 
 	@POST
-	@Path("/employees/{id}/qualification")
+	@Path("/employees/{id}/qualifications")
 	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)	
-	public Response addEmpEducation(@Valid List<EmpEducation> empEducation, @PathParam("id") String empId) {		
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addEmpEducations(@Valid List<EmpEducation> empEducations, @PathParam("id") String empId) {
 		ResultWithData result = new ResultWithData();
-					
-		empEducationService.addEmpEducation(empEducation.get(0), empId);
-		empEducationService.addEmpEducation(empEducation.get(1), empId);
-		empEducationService.addEmpEducation(empEducation.get(2), empId);
-		
-		
-		
-		
-		
+		empEducations.forEach(empEducation -> {
+			empEducationService.addEmpEducation(empEducation, empId);
+		});
 		result.setStatus(REST_STATUS_SUCCESS);
 		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
 		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-	
+
+	@PUT
+	@Path("/employees/{id}/qualifications")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateEmpEducations(@Valid List<EmpEducation> empEducations, @PathParam("id") String empId) {
+		ResultWithData result = new ResultWithData();
+		empEducationService.updateEmpEducationsByEmployeeId(empEducations, empId);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
 
 	/*
-	 * @PUT
-	 * 
-	 * @Path("/employees")
-	 * 
-	 * @Consumes(MediaType.APPLICATION_JSON)
-	 * 
-	 * @Produces(MediaType.APPLICATION_JSON) public Response updateEmployee(Employee
-	 * employee){ ResultWithData result = new ResultWithData();
-	 * employeeService.updateEmployee(employee);
-	 * result.setStatus(REST_STATUS_SUCCESS); GenericEntity<ResultWithData> entity =
-	 * new GenericEntity<ResultWithData>(result){}; return
-	 * Response.status(Status.OK).entity(entity).build(); }
-	 * 
 	 * @DELETE
 	 * 
 	 * @Path("/employees/{id}") public Response removeEmployee(@PathParam("id")

@@ -9,7 +9,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.hibernate.validator.constraints.Length;
@@ -18,53 +17,41 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.pmt.validators.GenderConstraint;
 import com.pmt.validators.ScoreTypeConstraint;
 
-@Entity
-@Table(name="education")
 public class EmpEducation {
-	@Id
-	@Column(name="edu_id")
-	@JsonProperty(value="id")
+
+	@JsonProperty(value = "id")
 	private String id;
-	
-	@Column(name="edu_empid")	
+
 	private String empId;
-	
-	@Column(name="edu_qualname")
-	@JsonProperty(value="qualificationName")
+
+	@JsonProperty(value = "qualificationName")
 	@NotBlank(message = "qualName")
 	private String qualName;
-	
-	@Column(name="edu_specialization")
-	@JsonProperty(value="spec")
+
+	@JsonProperty(value = "spec")
 	private String specialization;
-	
-	@Column(name="edu_startdate")
-	@Temporal(TemporalType.DATE)
-	@JsonProperty(value="qualStartDate")
+
+	@JsonProperty(value = "qualStartDate")
 	private Date qualStartDate;
-	
-	@Column(name="edu_enddate")
-	@Temporal(TemporalType.DATE)
-	@JsonProperty(value="qualEndDate")
+
+	@JsonProperty(value = "qualEndDate")
 	private Date qualEndDate;
-	
-	@Column(name="edu_score")	
-	@JsonProperty(value="score")
+
+	@JsonProperty(value = "score")
 	private float score;
-	
-	@Column(name="edu_scoretype")
+
 	@ScoreTypeConstraint(message = "scoreType")
-	@JsonProperty(value="scoreType")
+	@JsonProperty(value = "scoreType")	
 	private String scoreType;
-	
-	@Column(name="edu_institution")
-	@JsonProperty(value="institution")
+
+	@JsonProperty(value = "institution")
 	private String institution;
-	
-	public EmpEducation(){
-		
+
+	public EmpEducation() {
+
 	}
 
 	public String getId() {
@@ -138,14 +125,5 @@ public class EmpEducation {
 	public void setInstitution(String institution) {
 		this.institution = institution;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 
 }

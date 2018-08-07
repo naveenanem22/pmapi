@@ -25,14 +25,14 @@ public class EmpEducationServiceImpl implements EmpEducationService {
 
 	@Override
 	@Transactional(value = "jdbcTransactionManager")
-	public void updateEmpEducation(EmpEducation empEducation) {
-		this.empEducationDao.updateEmpEducation(empEducation);
+	public void updateEmpEducationsByEmployeeId(List<EmpEducation> empEducations, String empId) {		
+		this.empEducationDao.updateEmpEducationsByEmployeeId(empEducations, empId);
 	}
 
 	@Override
 	@Transactional(readOnly = true, value = "jdbcTransactionManager")
-	public List<EmpEducation> listEmpEducations() {
-		return this.empEducationDao.listEmpEducations();
+	public List<EmpEducation> listEmpEducationsByEmployeeId(String employeeId) {
+		return this.empEducationDao.listEmpEducationsByEmployeeId(employeeId);
 	}
 
 	@Override

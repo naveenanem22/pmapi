@@ -5,18 +5,27 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
-@Component(value="validationError")
+@Component(value = "validationError")
 public class ValidationError {
-	
-	private String propertyPath;    
-    private String errCode;
-    private String userMsg;
-    private String developerMsg;
-    private String moreInfo;
-    
-    public ValidationError(){
-    	
-    }
+
+	private String propertyPath;
+	private String errCode;
+	private String userMsg;
+	private String developerMsg;
+	private String moreInfo;
+	private String value;
+
+	public ValidationError() {
+
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
 
 	public String getPropertyPath() {
 		return propertyPath;
@@ -57,6 +66,5 @@ public class ValidationError {
 	public void setMoreInfo(String moreInfo) {
 		this.moreInfo = moreInfo;
 	}
-    
-    
+
 }
