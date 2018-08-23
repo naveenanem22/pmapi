@@ -10,6 +10,6 @@ public interface EmpEducationDao {
     public void updateEmpEducationsByEmployeeId(List<EmpEducation> empEducations, String empId);
     public List<EmpEducation> listEmpEducationsByEmployeeId(String employeeId);
     public EmpEducation getEmpEducationById(String id);
-    public void removeEmpEducation(String id);        
+    public int removeEmpEducation(String employeeId, String educationId);        
 
 }

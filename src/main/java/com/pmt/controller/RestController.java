@@ -294,16 +294,27 @@ public class RestController {
 		return Response.status(Status.OK).entity(entity).build();
 	}
 
-	/*
-	 * @DELETE
-	 * 
-	 * @Path("/employees/{id}") public Response removeEmployee(@PathParam("id")
-	 * String id){ ResultWithData result = new ResultWithData();
-	 * employeeService.removeEmployee(id); result.setStatus(REST_STATUS_SUCCESS);
-	 * GenericEntity<ResultWithData> entity = new
-	 * GenericEntity<ResultWithData>(result){}; return
-	 * Response.status(Status.OK).entity(entity).build(); }
-	 */
+	@DELETE
+	@Path("/employees/{empId}/qualifications/{qualId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removeEmpEducations(@PathParam("empId") String empId, @PathParam("qualId") String educationId) {
+		ResultWithData result = new ResultWithData();
+		if (empEducationService.removeEmpEducation(empId, educationId) == 1) {
+			result.setStatus(REST_STATUS_SUCCESS);
+			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+			};
+			return Response.status(Status.OK).entity(entity).build();
+
+		}
+
+		else {
+			result.setStatus(REST_STATUS_FAILURE);
+			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+			};
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(entity).build();
+		}
+
+	}
 
 	/********** EmpEducation APIs End ***********/
 

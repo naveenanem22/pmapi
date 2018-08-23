@@ -83,7 +83,12 @@ public class EmpEducationDaoImpl implements EmpEducationDao {
 	}
 
 	@Override
-	public void removeEmpEducation(String id) {
+	public int removeEmpEducation(String employeeId, String educationId) {
+		String sqlDeleteQuery = "DELETE FROM education WHERE edu_empid=:edu_empid && edu_id =:edu_id";
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("edu_id", educationId);
+		paramMap.put("edu_empid", employeeId);
+		return namedParameterJdbcTemplate.update(sqlDeleteQuery, paramMap);
 	}
 
 	private static final class EmpEducationMapper implements RowMapper<EmpEducation> {

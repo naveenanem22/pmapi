@@ -43,8 +43,8 @@ public class EmpEducationServiceImpl implements EmpEducationService {
 
 	@Override
 	@Transactional(value = "jdbcTransactionManager")
-	public void removeEmpEducation(String id) {
-		this.empEducationDao.removeEmpEducation(id);
+	public int removeEmpEducation(String employeeId, String educationId) {
+		return this.empEducationDao.removeEmpEducation(employeeId, educationId);
 	}
 
 }
