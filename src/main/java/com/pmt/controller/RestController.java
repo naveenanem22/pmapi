@@ -316,25 +316,24 @@ public class RestController {
 		}
 
 	}
-	
+
 	@DELETE
 	@Path("/employees/{empId}/qualifications")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response removeEmpEducations(Set<String> educationIds, @PathParam("empId") String empId) {
 		ResultWithData result = new ResultWithData();
-		
+
 		educationIds.forEach(educationId -> {
 			logger.debug(educationId);
 		});
-		
-		if(empEducationService.removeEmpEducations(empId, educationIds) == educationIds.size()){
+
+		if (empEducationService.removeEmpEducations(empId, educationIds) == educationIds.size()) {
 			result.setStatus(REST_STATUS_SUCCESS);
 			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
 			};
 			return Response.status(Status.OK).entity(entity).build();
-		}
-		else {
+		} else {
 			result.setStatus(REST_STATUS_FAILURE);
 			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
 			};
