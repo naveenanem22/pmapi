@@ -324,10 +324,6 @@ public class RestController {
 	public Response removeEmpEducations(Set<String> educationIds, @PathParam("empId") String empId) {
 		ResultWithData result = new ResultWithData();
 
-		educationIds.forEach(educationId -> {
-			logger.debug(educationId);
-		});
-
 		if (empEducationService.removeEmpEducations(empId, educationIds) == educationIds.size()) {
 			result.setStatus(REST_STATUS_SUCCESS);
 			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
