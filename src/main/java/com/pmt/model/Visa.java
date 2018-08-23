@@ -2,66 +2,67 @@ package com.pmt.model;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Entity
-@Table(name="visa")
 public class Visa {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="vsa_id")
-	private int id;
-	
-	@Column(name="vsa_country")
+
+	@JsonProperty(value = "id")
+	private String id;
+
+	@JsonProperty(value = "country")
 	private String country;
-	
-	@Column(name="vsa_type")
+
+	@JsonProperty(value = "visaType")
 	private String visaType;
-	
-	@Column(name="vsa_validtill")
+
+	@JsonProperty(value = "validTill")
 	private Date validTill;
-	
 
-	
-	public Visa(){
-		
+	@JsonProperty(value = "validFrom")
+	private Date validFrom;
+
+	public Visa() {
+
 	}
-	
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+
+	public void setId(String id) {
 		this.id = id;
 	}
+
+	public Date getValidFrom() {
+		return validFrom;
+	}
+
+	public void setValidFrom(Date validFrom) {
+		this.validFrom = validFrom;
+	}
+
 	public String getCountry() {
 		return country;
 	}
+
 	public void setCountry(String country) {
 		this.country = country;
 	}
+
 	public String getVisaType() {
 		return visaType;
 	}
+
 	public void setVisaType(String visaType) {
 		this.visaType = visaType;
 	}
+
 	public Date getValidTill() {
 		return validTill;
 	}
+
 	public void setValidTill(Date validTill) {
 		this.validTill = validTill;
 	}
-	
-
 
 }

@@ -1,6 +1,8 @@
 package com.pmt.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.validation.Valid;
@@ -30,10 +32,12 @@ import com.pmt.model.Businessunit;
 import com.pmt.model.EmpEducation;
 import com.pmt.model.Employee;
 import com.pmt.model.Skill;
+import com.pmt.model.Visa;
 import com.pmt.service.BusinessunitService;
 import com.pmt.service.EmpEducationService;
 import com.pmt.service.EmployeeService;
 import com.pmt.service.SkillService;
+import com.pmt.service.VisaService;
 import com.pmt.util.response.ResultWithData;
 import com.pmt.util.response.ResultWithData;
 
@@ -72,6 +76,10 @@ public class RestController {
 	@Autowired
 	@Qualifier("empEducationServiceImpl")
 	private EmpEducationService empEducationService;
+
+	@Autowired
+	@Qualifier("visaServiceImpl")
+	private VisaService visaService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -339,6 +347,23 @@ public class RestController {
 	}
 
 	/********** EmpEducation APIs End ***********/
+
+	/********** Visa APIs Start ***********/
+	@GET
+	@Path("/employees/{id}/visas")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getVisas(@PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		Map<String, List<Visa>> empVisas = new HashMap<String, List<Visa>>();
+		empVisas.put(employeeId, visaService.listVisasByEmployeeId(employeeId));
+		result.setStatus(REST_STATUS_SUCCESS);
+		result.setData(empVisas);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+
+	/********** Visa APIs End ***********/
 
 	/* This for developer testing that need to be deleted if no more necessary */
 	@GET
