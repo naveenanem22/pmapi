@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -89,6 +90,16 @@ public class EmpEducationDaoImpl implements EmpEducationDao {
 		paramMap.put("edu_id", educationId);
 		paramMap.put("edu_empid", employeeId);
 		return namedParameterJdbcTemplate.update(sqlDeleteQuery, paramMap);
+	}
+
+	@Override
+	public int removeEmpEducations(String employeeId, Set<String> educationIds) {
+		String sqlDeleteQuery = "DELETE FROM education WHERE edu_empid =:edu_empid && edu_id IN (:edu_ids)";
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("edu_ids", educationIds);
+		paramMap.put("edu_empid", employeeId);
+		return namedParameterJdbcTemplate.update(sqlDeleteQuery, paramMap);
+
 	}
 
 	private static final class EmpEducationMapper implements RowMapper<EmpEducation> {

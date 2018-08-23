@@ -1,6 +1,7 @@
 package com.pmt.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -297,7 +298,7 @@ public class RestController {
 	@DELETE
 	@Path("/employees/{empId}/qualifications/{qualId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response removeEmpEducations(@PathParam("empId") String empId, @PathParam("qualId") String educationId) {
+	public Response removeEmpEducation(@PathParam("empId") String empId, @PathParam("qualId") String educationId) {
 		ResultWithData result = new ResultWithData();
 		if (empEducationService.removeEmpEducation(empId, educationId) == 1) {
 			result.setStatus(REST_STATUS_SUCCESS);
@@ -307,6 +308,32 @@ public class RestController {
 
 		}
 
+		else {
+			result.setStatus(REST_STATUS_FAILURE);
+			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+			};
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(entity).build();
+		}
+
+	}
+	
+	@DELETE
+	@Path("/employees/{empId}/qualifications")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removeEmpEducations(Set<String> educationIds, @PathParam("empId") String empId) {
+		ResultWithData result = new ResultWithData();
+		
+		educationIds.forEach(educationId -> {
+			logger.debug(educationId);
+		});
+		
+		if(empEducationService.removeEmpEducations(empId, educationIds) == educationIds.size()){
+			result.setStatus(REST_STATUS_SUCCESS);
+			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+			};
+			return Response.status(Status.OK).entity(entity).build();
+		}
 		else {
 			result.setStatus(REST_STATUS_FAILURE);
 			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {

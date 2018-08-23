@@ -1,6 +1,7 @@
 package com.pmt.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -45,6 +46,12 @@ public class EmpEducationServiceImpl implements EmpEducationService {
 	@Transactional(value = "jdbcTransactionManager")
 	public int removeEmpEducation(String employeeId, String educationId) {
 		return this.empEducationDao.removeEmpEducation(employeeId, educationId);
+	}
+
+	@Override
+	@Transactional(value = "jdbcTransactionManager")
+	public int removeEmpEducations(String employeeId, Set<String> educationIds) {
+		return this.empEducationDao.removeEmpEducations(employeeId, educationIds);
 	}
 
 }
