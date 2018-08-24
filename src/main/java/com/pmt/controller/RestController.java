@@ -362,6 +362,21 @@ public class RestController {
 		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
+	
+	@POST
+	@Path("/employees/{id}/visas")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addVisas(@Valid List<Visa> visas, @PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		visas.forEach(visa -> {
+			visaService.addVisa(visa, employeeId);
+		});
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
 
 	/********** Visa APIs End ***********/
 
