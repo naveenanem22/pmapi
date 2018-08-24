@@ -42,6 +42,20 @@ public class VisaDaoImpl implements VisaDao {
 
 	@Override
 	public void updateVisasByEmployeeId(List<Visa> visas, String employeeId) {
+		String query = "UPDATE visa "
+				+ "SET vsa_country=:vsa_country, vsa_type=:vsa_type,"
+				+ "vsa_validtill=:vsa_validtill, vsa_validfrom=:vsa_validfrom "
+				+ "WHERE vsa_id =:vsa_id && vsa_empid=:vsa_empid";
+		Map<String, Object> namedParameters = new HashMap<String, Object>();
+		visas.forEach(visa -> {
+			namedParameters.put("vsa_country", visa.getCountry());
+			namedParameters.put("vsa_type", visa.getVisaType());
+			namedParameters.put("vsa_validtill", visa.getValidTill());
+			namedParameters.put("vsa_validfrom", visa.getValidFrom());
+			namedParameters.put("vsa_empid", employeeId);
+			namedParameters.put("vsa_id", visa.getId());
+			namedParameterJdbcTemplate.update(query, namedParameters);
+		});
 		
 
 	}
@@ -62,14 +76,21 @@ public class VisaDaoImpl implements VisaDao {
 
 	@Override
 	public int removeVisa(String employeeId, String visaId) {
-		// TODO Auto-generated method stub
-		return 0;
+		String query = "DELETE FROM visa WHERE vsa_empid =:vsa_empid && vsa_id =:vsa_id";
+		Map<String, Object> namedParameters = new HashMap<String, Object>();
+		namedParameters.put("vsa_empid", employeeId);
+		namedParameters.put("vsa_id", visaId);
+		return namedParameterJdbcTemplate.update(query, namedParameters);
+		
 	}
 
 	@Override
 	public int removeVisas(String employeeId, Set<String> visas) {
-		// TODO Auto-generated method stub
-		return 0;
+		String query =  "DELETE FROM visa WHERE vsa_empid =:vsa_empid && vsa_id IN (:vsa_ids)";
+		Map<String, Object> namedParameters = new HashMap<String, Object>();
+		namedParameters.put("vsa_empid", employeeId);
+		namedParameters.put("vsa_ids", visas);
+		return namedParameterJdbcTemplate.update(query, namedParameters);
 	}
 
 	private static final class VisaMapper implements RowMapper<Visa> {

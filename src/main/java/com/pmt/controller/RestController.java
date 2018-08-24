@@ -377,6 +377,62 @@ public class RestController {
 		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
+	
+	@PUT
+	@Path("/employees/{id}/visas")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateVisas(@Valid List<Visa> visas, @PathParam("id") String empId) {
+		ResultWithData result = new ResultWithData();
+		visaService.updateVisasByEmployeeId(visas, empId);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+	
+	@DELETE
+	@Path("/employees/{empId}/visas/{visaId}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removeVisa(@PathParam("empId") String empId, @PathParam("visaId") String visaId) {
+		ResultWithData result = new ResultWithData();
+		if (visaService.removeVisa(empId, visaId) == 1) {
+			result.setStatus(REST_STATUS_SUCCESS);
+			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+			};
+			return Response.status(Status.OK).entity(entity).build();
+
+		}
+
+		else {
+			result.setStatus(REST_STATUS_FAILURE);
+			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+			};
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(entity).build();
+		}
+
+	}
+
+	@DELETE
+	@Path("/employees/{empId}/visas")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removeVisas(Set<String> visaIds, @PathParam("empId") String empId) {
+		ResultWithData result = new ResultWithData();
+
+		if (visaService.removeVisas(empId, visaIds) == visaIds.size()) {
+			result.setStatus(REST_STATUS_SUCCESS);
+			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+			};
+			return Response.status(Status.OK).entity(entity).build();
+		} else {
+			result.setStatus(REST_STATUS_FAILURE);
+			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+			};
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(entity).build();
+		}
+
+	}
 
 	/********** Visa APIs End ***********/
 

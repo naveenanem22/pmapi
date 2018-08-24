@@ -43,14 +43,14 @@ public class VisaServiceImpl implements VisaService {
 
 	@Override
 	@Transactional(value = "jdbcTransactionManager")
-	public int removeVisa(String employeeId, String educationId) {
-		return this.visaDao.removeVisa(employeeId, educationId);
+	public int removeVisa(String employeeId, String visaId) {
+		return this.visaDao.removeVisa(employeeId, visaId);
 	}
 
 	@Override
 	@Transactional(value = "jdbcTransactionManager")
-	public int removeVisas(String employeeId, Set<String> educationIds) {
-		return this.visaDao.removeVisas(employeeId, educationIds);
+	public int removeVisas(String employeeId, Set<String> visaIds) {
+		return this.visaDao.removeVisas(employeeId, visaIds);
 	}
 
 }
