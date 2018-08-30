@@ -30,11 +30,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.pmt.model.Businessunit;
 import com.pmt.model.EmpEducation;
+import com.pmt.model.EmpSkill;
 import com.pmt.model.Employee;
 import com.pmt.model.Skill;
 import com.pmt.model.Visa;
 import com.pmt.service.BusinessunitService;
 import com.pmt.service.EmpEducationService;
+import com.pmt.service.EmpSkillService;
 import com.pmt.service.EmployeeService;
 import com.pmt.service.SkillService;
 import com.pmt.service.VisaService;
@@ -80,6 +82,10 @@ public class RestController {
 	@Autowired
 	@Qualifier("visaServiceImpl")
 	private VisaService visaService;
+
+	@Autowired
+	@Qualifier("empSkillServiceImpl")
+	private EmpSkillService empSkillService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -362,7 +368,7 @@ public class RestController {
 		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-	
+
 	@POST
 	@Path("/employees/{id}/visas")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -377,7 +383,7 @@ public class RestController {
 		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-	
+
 	@PUT
 	@Path("/employees/{id}/visas")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -390,7 +396,7 @@ public class RestController {
 		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-	
+
 	@DELETE
 	@Path("/employees/{empId}/visas/{visaId}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -435,6 +441,64 @@ public class RestController {
 	}
 
 	/********** Visa APIs End ***********/
+
+	/********** Employee-Skill APIs Start ***********/
+	@GET
+	@Path("/employees/{id}/skills")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getSkills(@PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		Map<String, List<EmpSkill>> empSkills = new HashMap<String, List<EmpSkill>>();
+		empSkills.put(employeeId, empSkillService.listSkillsById(employeeId));
+		result.setStatus(REST_STATUS_SUCCESS);
+		result.setData(empSkills);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+
+	@POST
+	@Path("/employees/{id}/skills")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addSkills(@Valid Set<EmpSkill> empSkills, @PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		empSkillService.addSkills(employeeId, empSkills);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+
+	@PUT
+	@Path("/employees/{id}/skills")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateSkills(@Valid Set<EmpSkill> empSkills, @PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		empSkillService.updateSkillsByEmployeeId(employeeId, empSkills);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+
+	@DELETE
+	@Path("/employees/{empId}/skills")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removeSkills(Set<String> skillIds, @PathParam("empId") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		empSkillService.removeSkills(employeeId, skillIds);
+
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+
+	}
+
+	/********** Employee-Skill APIs End ***********/
 
 	/* This for developer testing that need to be deleted if no more necessary */
 	@GET
