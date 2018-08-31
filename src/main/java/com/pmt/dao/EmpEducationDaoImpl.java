@@ -30,7 +30,7 @@ public class EmpEducationDaoImpl implements EmpEducationDao {
 
 	@Override
 	public void addEmpEducation(EmpEducation empEducation) {
-		String query = "INSERT INTO EDUCATION "
+		String query = "INSERT INTO education "
 				+ "(edu_id, edu_empid, edu_qualname, edu_startdate, edu_enddate, edu_score, edu_scoreType, edu_institution, edu_specialization) "
 				+ "VALUES (:eduid,:empid,:qualName,:startdate,:enddate,:score,:scoreType,:institution,:specialization)";
 		Map<String, Object> namedParameters = new HashMap<String, Object>();
