@@ -30,12 +30,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.pmt.model.Businessunit;
 import com.pmt.model.EmpEducation;
+import com.pmt.model.EmpPrevEmployment;
 import com.pmt.model.EmpSkill;
 import com.pmt.model.Employee;
 import com.pmt.model.Skill;
 import com.pmt.model.Visa;
 import com.pmt.service.BusinessunitService;
 import com.pmt.service.EmpEducationService;
+import com.pmt.service.EmpPrevEmploymentService;
 import com.pmt.service.EmpSkillService;
 import com.pmt.service.EmployeeService;
 import com.pmt.service.SkillService;
@@ -86,6 +88,10 @@ public class RestController {
 	@Autowired
 	@Qualifier("empSkillServiceImpl")
 	private EmpSkillService empSkillService;
+
+	@Autowired
+	@Qualifier(value = "empPrevEmploymentServiceImpl")
+	private EmpPrevEmploymentService empPrevEmploymentService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -499,6 +505,66 @@ public class RestController {
 	}
 
 	/********** Employee-Skill APIs End ***********/
+
+	/********** Employee-Previous Employment History APIs Start ***********/
+	@GET
+	@Path("/employees/{id}/prevEmployers")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getPrevEmploymentRecords(@PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		Map<String, List<EmpPrevEmployment>> empPrevEmployments = new HashMap<String, List<EmpPrevEmployment>>();
+		empPrevEmployments.put(employeeId, empPrevEmploymentService.listPrevEmploymentsByEmployeeId(employeeId));
+		result.setStatus(REST_STATUS_SUCCESS);
+		result.setData(empPrevEmployments);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+
+	@POST
+	@Path("/employees/{id}/prevEmployers")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addPrevEmploymentRecords(@Valid Set<EmpPrevEmployment> empPrevEmployments,
+			@PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		empPrevEmploymentService.addPrevEmployments(employeeId, empPrevEmployments);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+
+	@PUT
+	@Path("/employees/{id}/prevEmployers")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updatePrevEmploymentRecords(@Valid Set<EmpPrevEmployment> empPrevEmployments,
+			@PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		empPrevEmploymentService.updatePrevEmployments(employeeId, empPrevEmployments);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+
+	@DELETE
+	@Path("/employees/{empId}/prevEmployers")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removePrevEmploymentRecords(Set<EmpPrevEmployment> empPrevEmployments,
+			@PathParam("empId") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		empPrevEmploymentService.removePrevEmployments(employeeId, empPrevEmployments);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+
+	}
+
+	/********** Employee-Previous Employment History APIs End ***********/
 
 	/* This for developer testing that need to be deleted if no more necessary */
 	@GET
