@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.pmt.model.Businessunit;
 import com.pmt.model.EmpEducation;
+import com.pmt.model.EmpPassport;
 import com.pmt.model.EmpPrevEmployment;
 import com.pmt.model.EmpSkill;
 import com.pmt.model.Employee;
@@ -37,6 +38,7 @@ import com.pmt.model.Skill;
 import com.pmt.model.Visa;
 import com.pmt.service.BusinessunitService;
 import com.pmt.service.EmpEducationService;
+import com.pmt.service.EmpPassportService;
 import com.pmt.service.EmpPrevEmploymentService;
 import com.pmt.service.EmpSkillService;
 import com.pmt.service.EmployeeService;
@@ -92,6 +94,10 @@ public class RestController {
 	@Autowired
 	@Qualifier(value = "empPrevEmploymentServiceImpl")
 	private EmpPrevEmploymentService empPrevEmploymentService;
+
+	@Autowired
+	@Qualifier(value = "empPassportServiceImpl")
+	private EmpPassportService empPassportService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -550,11 +556,11 @@ public class RestController {
 	}
 
 	@DELETE
-	@Path("/employees/{empId}/prevEmployers")
+	@Path("/employees/{id}/prevEmployers")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response removePrevEmploymentRecords(Set<EmpPrevEmployment> empPrevEmployments,
-			@PathParam("empId") String employeeId) {
+	public Response removePrevEmploymentRecords(@Valid Set<EmpPrevEmployment> empPrevEmployments,
+			@PathParam("id") String employeeId) {
 		ResultWithData result = new ResultWithData();
 		empPrevEmploymentService.removePrevEmployments(employeeId, empPrevEmployments);
 		result.setStatus(REST_STATUS_SUCCESS);
@@ -565,6 +571,63 @@ public class RestController {
 	}
 
 	/********** Employee-Previous Employment History APIs End ***********/
+
+	/********** Employee-Passport APIs Start ***********/
+	@GET
+	@Path("/employees/{id}/passport")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getPassport(@PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		Map<String, EmpPassport> empPassport = new HashMap<String, EmpPassport>();
+		empPassport.put(employeeId, empPassportService.getPassport(employeeId));
+		result.setStatus(REST_STATUS_SUCCESS);
+		result.setData(empPassport);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+
+	@POST
+	@Path("/employees/{id}/passport")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addPassport(@Valid EmpPassport empPassport, @PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		empPassportService.addPassport(empPassport, employeeId);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+
+	@PUT
+	@Path("/employees/{id}/passport")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updatePassport(@Valid EmpPassport empPassport, @PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		empPassportService.updatePassport(empPassport, employeeId);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+
+	@DELETE
+	@Path("/employees/{id}/passport")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removePassport(@Valid EmpPassport empPassport, @PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		empPassportService.removePassport(employeeId, empPassport.getPassportNumber());
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+
+	}
+
+	/********** Employee-Passport APIs End ***********/
 
 	/* This for developer testing that need to be deleted if no more necessary */
 	@GET
