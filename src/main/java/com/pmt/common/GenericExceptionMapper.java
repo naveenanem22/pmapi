@@ -2,6 +2,9 @@ package com.pmt.common;
 
 import static com.pmt.common.PMAPIConstants.REST_STATUS_FAILURE;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 import javax.ws.rs.core.GenericEntity;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -40,17 +43,28 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
 	@Override
 	public Response toResponse(Throwable ex) {
 		ResultWithData result = new ResultWithData();
+		
 		AppErrorProperties aep = new ApplicationContextProvider().getApplicationContext().getBean("appErrorProp",
 				AppErrorProperties.class);
-		if (ExceptionUtils.indexOfType(ex, MySQLIntegrityConstraintViolationException.class) != -1)
+		if (ExceptionUtils.indexOfType(ex, MySQLIntegrityConstraintViolationException.class) != -1) {
 			ExceptionUtils.getThrowableList(ex).forEach(exception -> {
-				if (exception instanceof MySQLIntegrityConstraintViolationException)
-					if (exception.getMessage().contains(aep.getProperty("db.fk_edu_empid_emp_id"))) {
-						result.setData("Employee does not exist");
+				if (exception instanceof MySQLIntegrityConstraintViolationException) {
+					Stream<String> fkStream = Arrays
+							.stream(aep.getProperty("db.fk_on_employeeId").split(aep.getProperty("global.delimiter")));
+					if (fkStream.anyMatch(fkName -> {
+						return exception.getMessage().contains(fkName);
+					})) {
+						result.setData(aep.getProperty("db.fk_on_employeeId.msg"));
 						result.setStatus(REST_STATUS_FAILURE);
+
 					}
+				}
 
 			});
+			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+			};
+			return Response.status(Status.BAD_REQUEST).entity(entity).build();
+		}
 		else {
 			result.setData("Failed for unknown reasons");
 			result.setStatus(REST_STATUS_FAILURE);
