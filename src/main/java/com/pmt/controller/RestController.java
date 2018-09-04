@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.pmt.model.Businessunit;
+import com.pmt.model.EmpAddress;
 import com.pmt.model.EmpEducation;
 import com.pmt.model.EmpPassport;
 import com.pmt.model.EmpPrevEmployment;
@@ -37,6 +38,7 @@ import com.pmt.model.Employee;
 import com.pmt.model.Skill;
 import com.pmt.model.Visa;
 import com.pmt.service.BusinessunitService;
+import com.pmt.service.EmpAddressService;
 import com.pmt.service.EmpEducationService;
 import com.pmt.service.EmpPassportService;
 import com.pmt.service.EmpPrevEmploymentService;
@@ -98,6 +100,10 @@ public class RestController {
 	@Autowired
 	@Qualifier(value = "empPassportServiceImpl")
 	private EmpPassportService empPassportService;
+
+	@Autowired
+	@Qualifier(value = "empAddressServiceImpl")
+	private EmpAddressService empAddressService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -628,6 +634,63 @@ public class RestController {
 	}
 
 	/********** Employee-Passport APIs End ***********/
+
+	/********** Employee-Address APIs Start ***********/
+	@GET
+	@Path("/employees/{id}/empAddresses")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEmpAddresses(@PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		Map<String, List<EmpAddress>> empAddresses = new HashMap<String, List<EmpAddress>>();
+		empAddresses.put(employeeId, empAddressService.listEmpAddresses(employeeId));
+		result.setStatus(REST_STATUS_SUCCESS);
+		result.setData(empAddresses);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+
+	@POST
+	@Path("/employees/{id}/empAddresses")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response addEmpAddresses(@Valid Set<EmpAddress> empAddresses, @PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		empAddressService.addEmpAddresses(employeeId, empAddresses);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+
+	@PUT
+	@Path("/employees/{id}/empAddresses")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateEmpAddresses(@Valid Set<EmpAddress> empAddresses, @PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		empAddressService.updateEmpAddresses(employeeId, empAddresses);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+
+	@DELETE
+	@Path("/employees/{id}/empAddresses")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removeEmpAddresses(@Valid Set<EmpAddress> empAddresses, @PathParam("id") String employeeId) {
+		ResultWithData result = new ResultWithData();
+		empAddressService.removeEmpAddresses(employeeId, empAddresses);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+
+	}
+
+	/********** Employee-Address APIs End ***********/
 
 	/* This for developer testing that need to be deleted if no more necessary */
 	@GET
