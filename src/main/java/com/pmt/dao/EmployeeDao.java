@@ -6,8 +6,8 @@ import com.pmt.model.Employee;
 
 public interface EmployeeDao {
 	
-	public void addEmployee(Employee employee);
-    public void updateEmployee(Employee employee);
+	public void addEmployee(Employee employee, String employeeId);
+    public void updateEmployee(Employee employee, String employeeId);
     public List<Employee> listEmployees();
     public Employee getEmployeeById(String id);
     public void removeEmployee(String id);

@@ -1,5 +1,6 @@
 package com.pmt.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.annotation.Generated;
@@ -10,80 +11,73 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenerationTime;
 import org.hibernate.annotations.UpdateTimestamp;
 
-
-
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.pmt.common.JsonDateDeserializer;
+import com.pmt.common.JsonDateSerializer;
 import com.pmt.common.PMAPIConstants;
 import com.pmt.validators.ContactNumberConstraint;
 import com.pmt.validators.GenderConstraint;
 import com.pmt.validators.MaritalStatusConstraint;
 
-@Entity
-@Table(name="employee")
 public class Employee {
-	
-	@Id
-	@Column(name="emp_id")
+
 	private String id;
-	
-	@Column(name="emp_firstname")
-	@Size(min = 1, max = 25, message = "firstName")	
+
+	@Size(min = 1, max = 25, message = "firstName")
+	@JsonProperty(value = "firstName")
 	private String firstName;
-	
-	@Column(name="emp_lastname")
+
+	@JsonProperty(value = "lastName")
 	private String lastName;
-	
-	@Column(name="emp_gender")
+
+	@JsonProperty(value = "gender")
 	@GenderConstraint(message = "gender")
 	private String gender;
-	
-	@Column(name="emp_maritalstatus")
+
+	@JsonProperty(value = "maritalStatus")
 	@MaritalStatusConstraint(message = "maritalStatus")
 	private String maritalStatus;
-	
-	@Temporal(TemporalType.DATE)//This is mapped to emp_dob(of DATE datatype) of employee table in mysql 
-	@Column(name="emp_dob")
+
+	@JsonProperty(value = "dob")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date dob;
-	
-	@CreationTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-	@Column(name="emp_createddate", updatable = false)// updatable=true is necessary even though @CreationTimestamp is present 
-	private Date createdDate;
-	
-	@UpdateTimestamp
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="emp_updateddate")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-	private Date updatedDate;
-	
-	
-	public Employee(){
-		
+
+	@JsonProperty(value = "createdDate")
+	@JsonDeserialize(using = JsonDateDeserializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
+	private LocalDateTime createdDate;
+
+	@JsonProperty(value = "updatedDate")
+	@JsonDeserialize(using = JsonDateDeserializer.class)
+	@JsonSerialize(using = JsonDateSerializer.class)
+	private LocalDateTime updatedDate;
+
+	public Employee() {
+
 	}
 
-	public Date getCreatedDate() {
-		return createdDate;
+	public LocalDateTime getCreatedDate() {
+		return LocalDateTime.now();
 	}
 
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(LocalDateTime createdDate) {
 		this.createdDate = createdDate;
 	}
 
-	public Date getUpdatedDate() {
-		return updatedDate;
+	public LocalDateTime getUpdatedDate() {
+		return LocalDateTime.now();
 	}
 
-	public void setUpdatedDate(Date updatedDate) {
+	public void setUpdatedDate(LocalDateTime updatedDate) {
 		this.updatedDate = updatedDate;
 	}
 
@@ -134,7 +128,5 @@ public class Employee {
 	public void setMaritalStatus(String maritalStatus) {
 		this.maritalStatus = maritalStatus;
 	}
-	
-	
 
 }

@@ -1,8 +1,7 @@
 package com.pmt.service;
 
 import java.util.List;
-
-
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,42 +11,41 @@ import org.springframework.transaction.annotation.Transactional;
 import com.pmt.dao.EmployeeDao;
 import com.pmt.model.Employee;
 
-@Service(value="employeeServiceImpl")
+@Service(value = "employeeServiceImpl")
 public class EmployeeServiceImpl implements EmployeeService {
-	
+
 	@Autowired
-	@Qualifier(value="employeeDaoImpl")
+	@Qualifier(value = "employeeDaoImpl")
 	private EmployeeDao employeeDao;
 
 	@Override
-	@Transactional(value="hibernateTransactionManager")
+	@Transactional(value = "jdbcTransactionManager")
 	public void addEmployee(Employee employee) {
-		this.employeeDao.addEmployee(employee);
+		this.employeeDao.addEmployee(employee, new Random().toString());
 	}
 
 	@Override
-	@Transactional(value="hibernateTransactionManager")
-	public void updateEmployee(Employee employee) {
-		this.employeeDao.updateEmployee(employee);
+	@Transactional(value = "jdbcTransactionManager")
+	public void updateEmployee(Employee employee, String employeeId) {
+		this.employeeDao.updateEmployee(employee, employeeId);
 	}
 
 	@Override
-	@Transactional(readOnly = true, value="hibernateTransactionManager")
+	@Transactional(readOnly = true, value = "jdbcTransactionManager")
 	public List<Employee> listEmployees() {
 		return this.employeeDao.listEmployees();
 	}
 
 	@Override
-	@Transactional(readOnly = true, value="hibernateTransactionManager")
-	public Employee getEmployeeById(String id) {		
-		return this.employeeDao.getEmployeeById(id);
+	@Transactional(readOnly = true, value = "jdbcTransactionManager")
+	public Employee getEmployeeById(String employeeId) {
+		return this.employeeDao.getEmployeeById(employeeId);
 	}
-	
 
 	@Override
-	@Transactional(value="hibernateTransactionManager")
-	public void removeEmployee(String id) {
-		this.employeeDao.removeEmployee(id);
+	@Transactional(value = "jdbcTransactionManager")
+	public void removeEmployee(String employeeId) {
+		this.employeeDao.removeEmployee(employeeId);
 	}
 
 }

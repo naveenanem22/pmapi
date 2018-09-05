@@ -259,12 +259,12 @@ public class RestController {
 	}
 
 	@PUT
-	@Path("/employees")
+	@Path("/employees/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateEmployee(Employee employee) {
+	public Response updateEmployee(@Valid Employee employee, @PathParam("id") String employeeId) {
 		ResultWithData result = new ResultWithData();
-		employeeService.updateEmployee(employee);
+		employeeService.updateEmployee(employee, employeeId);
 		result.setStatus(REST_STATUS_SUCCESS);
 		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
 		};
@@ -273,9 +273,10 @@ public class RestController {
 
 	@DELETE
 	@Path("/employees/{id}")
-	public Response removeEmployee(@PathParam("id") String id) {
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response removeEmployee(@PathParam("id") String employeeId) {
 		ResultWithData result = new ResultWithData();
-		employeeService.removeEmployee(id);
+		employeeService.removeEmployee(employeeId);
 		result.setStatus(REST_STATUS_SUCCESS);
 		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
 		};
