@@ -6,11 +6,11 @@ import com.pmt.model.Employee;
 
 public interface EmployeeDao {
 	
-	public void addEmployee(Employee employee, String employeeId);
-    public void updateEmployee(Employee employee, String employeeId);
+	public void addEmployee(Employee employee, int employeeId);
+    public void updateEmployee(Employee employee, int employeeId);
     public List<Employee> listEmployees();
-    public Employee getEmployeeById(String id);
-    public void removeEmployee(String id);
+    public Employee getEmployeeById(int employeeId);
+    public void removeEmployee(int employeeId);
     public List<Employee> getEmployeesByName(String name);    
 
 }

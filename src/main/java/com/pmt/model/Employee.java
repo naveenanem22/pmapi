@@ -30,7 +30,8 @@ import com.pmt.validators.MaritalStatusConstraint;
 
 public class Employee {
 
-	private String id;
+	@JsonProperty(value = "id")
+	private int id;
 
 	@Size(min = 1, max = 25, message = "firstName")
 	@JsonProperty(value = "firstName")
@@ -89,11 +90,11 @@ public class Employee {
 		this.dob = dob;
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

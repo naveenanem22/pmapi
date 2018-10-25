@@ -21,12 +21,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	@Transactional(value = "jdbcTransactionManager")
 	public void addEmployee(Employee employee) {
-		this.employeeDao.addEmployee(employee, new Random().toString());
+		this.employeeDao.addEmployee(employee, 123456);
 	}
 
 	@Override
 	@Transactional(value = "jdbcTransactionManager")
-	public void updateEmployee(Employee employee, String employeeId) {
+	public void updateEmployee(Employee employee, int employeeId) {
 		this.employeeDao.updateEmployee(employee, employeeId);
 	}
 
@@ -38,13 +38,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	@Transactional(readOnly = true, value = "jdbcTransactionManager")
-	public Employee getEmployeeById(String employeeId) {
+	public Employee getEmployeeById(int employeeId) {
 		return this.employeeDao.getEmployeeById(employeeId);
 	}
 
 	@Override
 	@Transactional(value = "jdbcTransactionManager")
-	public void removeEmployee(String employeeId) {
+	public void removeEmployee(int employeeId) {
 		this.employeeDao.removeEmployee(employeeId);
 	}
 

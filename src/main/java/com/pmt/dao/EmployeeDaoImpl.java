@@ -23,14 +23,14 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 	@Override
-	public void addEmployee(Employee employee, String employeeId) {
+	public void addEmployee(Employee employee, int employeeId) {
 		StringBuilder sql = new StringBuilder();
 		sql.append(
 				"INSERT INTO employee (emp_id, emp_firstname, emp_lastname, emp_gender, emp_dob, emp_maritalstatus, emp_createddate, emp_updateddate)\r\n"
 						+ "VALUES (:emp_id,:emp_firstname,:emp_lastname,:emp_gender,:emp_dob,:emp_maritalstatus,:emp_createddate,:emp_updateddate);");
 
 		Map<String, Object> namedParameters = new HashMap<String, Object>();
-		namedParameters.put("emp_id", "SK111111");
+		namedParameters.put("emp_id", 123456);
 		namedParameters.put("emp_firstname", employee.getFirstName());
 		namedParameters.put("emp_lastname", employee.getLastName());
 		namedParameters.put("emp_gender", employee.getGender());
@@ -44,7 +44,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public void updateEmployee(Employee employee, String employeeId) {
+	public void updateEmployee(Employee employee, int employeeId) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE employee SET ");
 		sql.append("emp_firstname =:emp_firstname,");
@@ -77,7 +77,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public Employee getEmployeeById(String employeeId) {
+	public Employee getEmployeeById(int employeeId) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("SELECT * FROM employee WHERE emp_id =:emp_id");
 		Map<String, Object> namedParameters = new HashMap<String, Object>();
@@ -87,7 +87,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 	}
 
 	@Override
-	public void removeEmployee(String employeeId) {
+	public void removeEmployee(int employeeId) {
 		StringBuilder sql = new StringBuilder();
 		sql.append("DELETE FROM employee WHERE emp_id =:emp_id");
 		Map<String, Object> namedParameters = new HashMap<String, Object>();
@@ -112,7 +112,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 			employee.setDob(rs.getDate("emp_dob"));
 			employee.setFirstName(rs.getString("emp_firstname"));
 			employee.setGender(rs.getString("emp_gender"));
-			employee.setId(rs.getString("emp_id"));
+			employee.setId(rs.getInt("emp_id"));
 			employee.setLastName(rs.getString("emp_lastname"));
 			employee.setMaritalStatus(rs.getString("emp_maritalstatus"));
 			employee.setUpdatedDate(rs.getTimestamp("emp_updateddate").toLocalDateTime());

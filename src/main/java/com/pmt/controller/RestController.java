@@ -262,7 +262,7 @@ public class RestController {
 	@Path("/employees/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateEmployee(@Valid Employee employee, @PathParam("id") String employeeId) {
+	public Response updateEmployee(@Valid Employee employee, @PathParam("id") int employeeId) {
 		ResultWithData result = new ResultWithData();
 		employeeService.updateEmployee(employee, employeeId);
 		result.setStatus(REST_STATUS_SUCCESS);
@@ -274,7 +274,7 @@ public class RestController {
 	@DELETE
 	@Path("/employees/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response removeEmployee(@PathParam("id") String employeeId) {
+	public Response removeEmployee(@PathParam("id") int employeeId) {
 		ResultWithData result = new ResultWithData();
 		employeeService.removeEmployee(employeeId);
 		result.setStatus(REST_STATUS_SUCCESS);
