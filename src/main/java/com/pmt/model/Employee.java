@@ -67,7 +67,7 @@ public class Employee {
 	}
 
 	public LocalDateTime getCreatedDate() {
-		return LocalDateTime.now();
+		return createdDate;
 	}
 
 	public void setCreatedDate(LocalDateTime createdDate) {
@@ -75,7 +75,7 @@ public class Employee {
 	}
 
 	public LocalDateTime getUpdatedDate() {
-		return LocalDateTime.now();
+		return updatedDate;
 	}
 
 	public void setUpdatedDate(LocalDateTime updatedDate) {
