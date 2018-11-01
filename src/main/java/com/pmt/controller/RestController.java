@@ -24,10 +24,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import com.pmt.model.Businessunit;
 import com.pmt.model.EmpAddress;
 import com.pmt.model.EmpEducation;
@@ -35,7 +31,6 @@ import com.pmt.model.EmpPassport;
 import com.pmt.model.EmpPrevEmployment;
 import com.pmt.model.EmpSkill;
 import com.pmt.model.Employee;
-import com.pmt.model.Skill;
 import com.pmt.model.Visa;
 import com.pmt.service.BusinessunitService;
 import com.pmt.service.EmpAddressService;
@@ -44,11 +39,8 @@ import com.pmt.service.EmpPassportService;
 import com.pmt.service.EmpPrevEmploymentService;
 import com.pmt.service.EmpSkillService;
 import com.pmt.service.EmployeeService;
-import com.pmt.service.SkillService;
 import com.pmt.service.VisaService;
 import com.pmt.util.response.ResultWithData;
-import com.pmt.util.response.ResultWithData;
-
 import static com.pmt.common.PMAPIConstants.*;
 
 /**
@@ -68,10 +60,6 @@ import static com.pmt.common.PMAPIConstants.*;
 public class RestController {
 
 	private static final Logger logger = LogManager.getLogger(RestController.class);
-
-	@Autowired
-	@Qualifier("skillServiceImpl")
-	private SkillService skillService;
 
 	@Autowired
 	@Qualifier("businessunitServiceImpl")
