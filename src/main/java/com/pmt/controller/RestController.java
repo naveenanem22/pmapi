@@ -117,62 +117,6 @@ public class RestController {
 		return Response.status(Status.OK).entity(entity).build();
 	}
 
-	/********** Skill APIs start ***********/
-
-	@GET
-	@Path("/skills")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response listSkills() {
-		ResultWithData result = new ResultWithData();
-
-		List<Skill> skills = skillService.listSkills();
-		result.setStatus(REST_STATUS_SUCCESS);
-		result.setData(skills);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
-		};
-		return Response.ok(entity).build();
-	}
-
-	@POST
-	@Path("/skills")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response addSkill(Skill skill) {
-		ResultWithData result = new ResultWithData();
-		skillService.addSkill(skill);
-		result.setStatus(REST_STATUS_SUCCESS);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
-		};
-		return Response.ok(entity).build();
-	}
-
-	@DELETE
-	@Path("/skills/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response removeSkill(@PathParam("id") int id) {
-		ResultWithData result = new ResultWithData();
-		skillService.removeSkill(id);
-		result.setStatus(REST_STATUS_SUCCESS);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
-		};
-		return Response.ok(entity).build();
-	}
-
-	@PUT
-	@Path("/skills")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateSkill(Skill skill) {
-		ResultWithData result = new ResultWithData();
-		skillService.updateSkill(skill);
-		result.setStatus(REST_STATUS_SUCCESS);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
-		};
-		return Response.ok(entity).build();
-	}
-
-	/********** Skill APIs end ***********/
-
 	/********** BusinessUnit APIs start ***********/
 
 	@GET
