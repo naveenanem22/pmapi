@@ -51,6 +51,8 @@ public class Employee {
 	@JsonProperty(value = "dob")
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private Date dob;
+	
+	
 
 	@JsonProperty(value = "createdDate")
 	@JsonDeserialize(using = JsonDateDeserializer.class)

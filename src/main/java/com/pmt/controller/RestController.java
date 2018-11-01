@@ -24,7 +24,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import com.pmt.model.Businessunit;
 import com.pmt.model.EmpAddress;
 import com.pmt.model.EmpEducation;
 import com.pmt.model.EmpPassport;
@@ -32,7 +31,6 @@ import com.pmt.model.EmpPrevEmployment;
 import com.pmt.model.EmpSkill;
 import com.pmt.model.Employee;
 import com.pmt.model.Visa;
-import com.pmt.service.BusinessunitService;
 import com.pmt.service.EmpAddressService;
 import com.pmt.service.EmpEducationService;
 import com.pmt.service.EmpPassportService;
@@ -60,10 +58,6 @@ import static com.pmt.common.PMAPIConstants.*;
 public class RestController {
 
 	private static final Logger logger = LogManager.getLogger(RestController.class);
-
-	@Autowired
-	@Qualifier("businessunitServiceImpl")
-	private BusinessunitService businessunitService;
 
 	@Autowired
 	@Qualifier("employeeServiceImpl")
@@ -104,60 +98,6 @@ public class RestController {
 		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-
-	/********** BusinessUnit APIs start ***********/
-
-	@GET
-	@Path("/businessunits")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getBusinessunits() {
-		ResultWithData result = new ResultWithData();
-		List<Businessunit> businessunits = businessunitService.listBusinessunits();
-		result.setStatus(REST_STATUS_SUCCESS);
-		result.setData(businessunits);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
-		};
-		return Response.status(Status.OK).entity(entity).build();
-	}
-
-	@POST
-	@Path("/businessunits")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response addBusinessunit(Businessunit businessunit) {
-		ResultWithData result = new ResultWithData();
-		businessunitService.addBusinessunit(businessunit);
-		result.setStatus(REST_STATUS_SUCCESS);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
-		};
-		return Response.status(Status.OK).entity(entity).build();
-	}
-
-	@PUT
-	@Path("/businessunits")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateBusinessunit(Businessunit businessunit) {
-		ResultWithData result = new ResultWithData();
-		businessunitService.updateBusinessunit(businessunit);
-		result.setStatus(REST_STATUS_SUCCESS);
-		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
-		};
-		return Response.status(Status.OK).entity(entity).build();
-	}
-
-	@DELETE
-	@Path("/businessunits/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response removeBusinessunit(@PathParam("id") int id) {
-		ResultWithData result = new ResultWithData();
-		businessunitService.removeBusinessunit(id);
-		result.setStatus(REST_STATUS_SUCCESS);
-		return Response.status(Status.OK).entity(new GenericEntity<ResultWithData>(result) {
-		}).build();
-	}
-
-	/********** BusinessUnit APIs end ***********/
 
 	/********** Location APIs Start ***********/
 
