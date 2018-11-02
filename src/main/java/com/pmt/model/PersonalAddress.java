@@ -3,37 +3,37 @@ package com.pmt.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class PersonalAddress {
-	
+
 	@JsonProperty(value = "id")
 	private int id;
-	
+
 	@JsonProperty(value = "streetName")
 	private String streetName;
-	
+
 	@JsonProperty(value = "buildingNumber")
-	private int buildingNumber;
-	
-	@JsonProperty(value = "city")		
+	private String buildingNumber;
+
+	@JsonProperty(value = "city")
 	private String city;
-	
+
 	@JsonProperty(value = "state")
 	private String state;
-	
+
 	@JsonProperty(value = "country")
 	private String country;
-	
+
 	@JsonProperty(value = "postalCode")
 	private int postalCode;
-	
+
 	@JsonProperty(value = "addressLine1")
 	private String addressLine1;
-	
+
 	@JsonProperty(value = "addressLine2")
 	private String addressLine2;
-	
+
 	@JsonProperty(value = "addressLine3")
 	private String addressLine3;
-	
+
 	@JsonProperty(value = "addressType")
 	private String addressType;
 
@@ -53,11 +53,11 @@ public class PersonalAddress {
 		this.streetName = streetName;
 	}
 
-	public int getBuildingNumber() {
+	public String getBuildingNumber() {
 		return buildingNumber;
 	}
 
-	public void setBuildingNumber(int buildingNumber) {
+	public void setBuildingNumber(String buildingNumber) {
 		this.buildingNumber = buildingNumber;
 	}
 

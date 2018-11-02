@@ -38,10 +38,10 @@
         <property name="dataSource" ref="dataSource" />
         <property name="annotatedClasses">
             <list>
-                <value>com.pmt.model.Skill</value>
+                <!-- <value>com.pmt.model.Skill</value>
                 <value>com.pmt.model.Businessunit</value>
-                <value>com.pmt.model.Employee</value>
-                <value>com.pmt.model.EmpEducation</value>
+                <value>com.pmt.model.Employee</value> -->
+                <!-- <value>com.pmt.model.EmpEducation</value> -->
             </list>
         </property>
         <property name="hibernateProperties">

@@ -2,6 +2,8 @@ package com.pmt.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,8 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public void addEmployee(Employee employee, int employeeId) {
+		employee.setCreatedDate(LocalDateTime.now(ZoneOffset.UTC));
+		employee.setUpdatedDate(LocalDateTime.now(ZoneOffset.UTC));
 		StringBuilder sql = new StringBuilder();
 		sql.append(
 				"INSERT INTO employee (emp_id, emp_firstname, emp_lastname, emp_gender, emp_dob, emp_maritalstatus, emp_createddate, emp_updateddate)\r\n"
@@ -45,6 +49,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
 
 	@Override
 	public void updateEmployee(Employee employee, int employeeId) {
+		employee.setUpdatedDate(LocalDateTime.now(ZoneOffset.UTC));
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE employee SET ");
 		sql.append("emp_firstname =:emp_firstname,");
