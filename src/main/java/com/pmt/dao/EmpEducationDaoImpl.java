@@ -30,40 +30,40 @@ public class EmpEducationDaoImpl implements EmpEducationDao {
 
 	@Override
 	public void addEmpEducation(EmpEducation empEducation) {
-		String query = "INSERT INTO education "
-				+ "(edu_id, edu_empid, edu_qualname, edu_startdate, edu_enddate, edu_score, edu_scoreType, edu_institution, edu_specialization) "
-				+ "VALUES (:eduid,:empid,:qualName,:startdate,:enddate,:score,:scoreType,:institution,:specialization)";
+		String query = "INSERT INTO employeeeducation "
+				+ "(ee_id, ee_emp_id, ee_qualname, ee_start_date, ee_end_date, ee_score, ee_score_type, ee_institution, ee_specialization) "
+				+ "VALUES (:ee_id,:ee_emp_id,:ee_qualname,:ee_start_date,:ee_end_date,:ee_score,:ee_score_type,:ee_institution,:ee_specialization)";
 		Map<String, Object> namedParameters = new HashMap<String, Object>();
-		namedParameters.put("eduid", empEducation.getId());
-		namedParameters.put("empid", empEducation.getEmpId());
-		namedParameters.put("qualName", empEducation.getQualName());
-		namedParameters.put("startdate", empEducation.getQualStartDate());
-		namedParameters.put("enddate", empEducation.getQualEndDate());
-		namedParameters.put("score", empEducation.getScore());
-		namedParameters.put("scoreType", empEducation.getScoreType());
-		namedParameters.put("institution", empEducation.getInstitution());
-		namedParameters.put("specialization", empEducation.getSpecialization());
+		namedParameters.put("ee_id", empEducation.getId());
+		namedParameters.put("ee_emp_id", empEducation.getEmpId());
+		namedParameters.put("ee_qualname", empEducation.getQualName());
+		namedParameters.put("ee_start_date", empEducation.getQualStartDate());
+		namedParameters.put("ee_end_date", empEducation.getQualEndDate());
+		namedParameters.put("ee_score", empEducation.getScore());
+		namedParameters.put("ee_score_type", empEducation.getScoreType());
+		namedParameters.put("ee_institution", empEducation.getInstitution());
+		namedParameters.put("ee_specialization", empEducation.getSpecialization());
 		namedParameterJdbcTemplate.update(query, namedParameters);
 	}
 
 	@Override
 	public void updateEmpEducationsByEmployeeId(List<EmpEducation> empEducations, String empId) {
 		empEducations.forEach(empEducation -> {
-			String sqlUpdateQuery = "UPDATE education "
-					+ "SET edu_qualname=:edu_qualname, edu_startdate=:edu_startdate,"
-					+ "edu_enddate=:edu_enddate, edu_score=:edu_score, edu_scoreType=:edu_scoreType,"
-					+ "edu_institution=:edu_institution, edu_specialization=:edu_specialization "
-					+ "WHERE edu_id =:edu_id && edu_empid=:edu_empid";
+			String sqlUpdateQuery = "UPDATE employeeeducation "
+					+ "SET ee_qualname=:ee_qualname, ee_start_date=:ee_start_date,"
+					+ "ee_end_date=:ee_end_date, ee_score=:ee_score, ee_score_type=:ee_score_type,"
+					+ "ee_institution=:ee_institution, ee_specialization=:ee_specialization "
+					+ "WHERE ee_id =:ee_id && ee_emp_id=:ee_emp_id";
 			Map<String, Object> paramMap = new HashMap<String, Object>();
-			paramMap.put("edu_id", empEducation.getId());
-			paramMap.put("edu_empid", empId);
-			paramMap.put("edu_qualname", empEducation.getQualName());
-			paramMap.put("edu_startdate", empEducation.getQualStartDate());
-			paramMap.put("edu_enddate", empEducation.getQualEndDate());
-			paramMap.put("edu_score", empEducation.getScore());
-			paramMap.put("edu_scoreType", empEducation.getScoreType());
-			paramMap.put("edu_institution", empEducation.getInstitution());
-			paramMap.put("edu_specialization", empEducation.getSpecialization());
+			paramMap.put("ee_id", empEducation.getId());
+			paramMap.put("ee_emp_id", empId);
+			paramMap.put("ee_qualname", empEducation.getQualName());
+			paramMap.put("ee_start_date", empEducation.getQualStartDate());
+			paramMap.put("ee_end_date", empEducation.getQualEndDate());
+			paramMap.put("ee_score", empEducation.getScore());
+			paramMap.put("ee_score_type", empEducation.getScoreType());
+			paramMap.put("ee_institution", empEducation.getInstitution());
+			paramMap.put("ee_specialization", empEducation.getSpecialization());
 			namedParameterJdbcTemplate.update(sqlUpdateQuery, paramMap);
 		});
 
@@ -71,9 +71,9 @@ public class EmpEducationDaoImpl implements EmpEducationDao {
 
 	@Override
 	public List<EmpEducation> listEmpEducationsByEmployeeId(String employeeId) {
-		String sqlSelectQuery = "SELECT * FROM education WHERE edu_empid=:edu_empid";
+		String sqlSelectQuery = "SELECT * FROM employeeeducation WHERE ee_emp_id=:ee_emp_id";
 
-		return namedParameterJdbcTemplate.query(sqlSelectQuery, new MapSqlParameterSource("edu_empid", employeeId),
+		return namedParameterJdbcTemplate.query(sqlSelectQuery, new MapSqlParameterSource("ee_emp_id", employeeId),
 				new EmpEducationMapper());
 
 	}
@@ -85,19 +85,19 @@ public class EmpEducationDaoImpl implements EmpEducationDao {
 
 	@Override
 	public int removeEmpEducation(String employeeId, String educationId) {
-		String sqlDeleteQuery = "DELETE FROM education WHERE edu_empid=:edu_empid && edu_id =:edu_id";
+		String sqlDeleteQuery = "DELETE FROM employeeeducation WHERE ee_emp_id=:ee_emp_id && ee_id =:ee_id";
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("edu_id", educationId);
-		paramMap.put("edu_empid", employeeId);
+		paramMap.put("ee_id", educationId);
+		paramMap.put("ee_emp_id", employeeId);
 		return namedParameterJdbcTemplate.update(sqlDeleteQuery, paramMap);
 	}
 
 	@Override
 	public int removeEmpEducations(String employeeId, Set<String> educationIds) {
-		String sqlDeleteQuery = "DELETE FROM education WHERE edu_empid =:edu_empid && edu_id IN (:edu_ids)";
+		String sqlDeleteQuery = "DELETE FROM employeeeducation WHERE ee_emp_id =:ee_emp_id && ee_id IN (:ee_ids)";
 		Map<String, Object> paramMap = new HashMap<String, Object>();
-		paramMap.put("edu_ids", educationIds);
-		paramMap.put("edu_empid", employeeId);
+		paramMap.put("ee_ids", educationIds);
+		paramMap.put("ee_emp_id", employeeId);
 		return namedParameterJdbcTemplate.update(sqlDeleteQuery, paramMap);
 
 	}
@@ -105,15 +105,15 @@ public class EmpEducationDaoImpl implements EmpEducationDao {
 	private static final class EmpEducationMapper implements RowMapper<EmpEducation> {
 		public EmpEducation mapRow(ResultSet rs, int rowNum) throws SQLException {
 			EmpEducation empEducation = new EmpEducation();
-			empEducation.setEmpId(rs.getString("edu_empid"));
-			empEducation.setId(rs.getString("edu_id"));
-			empEducation.setInstitution(rs.getString("edu_institution"));
-			empEducation.setQualStartDate(rs.getDate("edu_startdate"));
-			empEducation.setQualEndDate(rs.getDate("edu_enddate"));
-			empEducation.setSpecialization(rs.getString("edu_specialization"));
-			empEducation.setScore(rs.getFloat("edu_score"));
-			empEducation.setScoreType(rs.getString("edu_scoreType"));
-			empEducation.setQualName(rs.getString("edu_qualname"));
+			empEducation.setEmpId(rs.getString("ee_emp_id"));
+			empEducation.setId(rs.getString("ee_id"));
+			empEducation.setInstitution(rs.getString("ee_institution"));
+			empEducation.setQualStartDate(rs.getDate("ee_start_date"));
+			empEducation.setQualEndDate(rs.getDate("ee_end_date"));
+			empEducation.setSpecialization(rs.getString("ee_specialization"));
+			empEducation.setScore(rs.getFloat("ee_score"));
+			empEducation.setScoreType(rs.getString("ee_score_type"));
+			empEducation.setQualName(rs.getString("ee_qualname"));
 
 			return empEducation;
 		}
