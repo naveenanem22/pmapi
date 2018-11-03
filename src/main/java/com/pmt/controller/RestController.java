@@ -449,9 +449,9 @@ public class RestController {
 	@GET
 	@Path("/employees/{id}/passport")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getPassport(@PathParam("id") String employeeId) {
+	public Response getPassport(@PathParam("id") int employeeId) {
 		ResultWithData result = new ResultWithData();
-		Map<String, EmpPassport> empPassport = new HashMap<String, EmpPassport>();
+		Map<Integer, EmpPassport> empPassport = new HashMap<Integer, EmpPassport>();
 		empPassport.put(employeeId, empPassportService.getPassport(employeeId));
 		result.setStatus(REST_STATUS_SUCCESS);
 		result.setData(empPassport);
@@ -464,7 +464,7 @@ public class RestController {
 	@Path("/employees/{id}/passport")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addPassport(@Valid EmpPassport empPassport, @PathParam("id") String employeeId) {
+	public Response addPassport(@Valid EmpPassport empPassport, @PathParam("id") int employeeId) {
 		ResultWithData result = new ResultWithData();
 		empPassportService.addPassport(empPassport, employeeId);
 		result.setStatus(REST_STATUS_SUCCESS);
@@ -477,7 +477,7 @@ public class RestController {
 	@Path("/employees/{id}/passport")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updatePassport(@Valid EmpPassport empPassport, @PathParam("id") String employeeId) {
+	public Response updatePassport(@Valid EmpPassport empPassport, @PathParam("id") int employeeId) {
 		ResultWithData result = new ResultWithData();
 		empPassportService.updatePassport(empPassport, employeeId);
 		result.setStatus(REST_STATUS_SUCCESS);
@@ -490,9 +490,9 @@ public class RestController {
 	@Path("/employees/{id}/passport")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response removePassport(@Valid EmpPassport empPassport, @PathParam("id") String employeeId) {
+	public Response removePassport(@PathParam("id") int employeeId) {
 		ResultWithData result = new ResultWithData();
-		empPassportService.removePassport(employeeId, empPassport.getPassportNumber());
+		empPassportService.removePassport(employeeId);
 		result.setStatus(REST_STATUS_SUCCESS);
 		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
 		};

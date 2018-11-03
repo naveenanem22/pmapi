@@ -21,57 +21,59 @@ public class EmpPassportDaoImpl implements EmpPassportDao {
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 	@Override
-	public void addPassport(EmpPassport empPassport, String employeeId) {
+	public void addPassport(EmpPassport empPassport, int employeeId) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("INSERT INTO emppassport (epp_empid, epp_number, epp_dateofissue, epp_dateofexpiry) ");
-		sql.append("VALUES(:epp_empid, :epp_number, :epp_dateofissue, :epp_dateofexpiry)");
+		sql.append(
+				"INSERT INTO employeepassport (epp_id, epp_emp_id, epp_number, epp_date_of_issue, epp_date_of_expiry) ");
+		sql.append("VALUES(:epp_id, :epp_emp_id, :epp_number, :epp_date_of_issue, :epp_date_of_expiry)");
 
 		Map<String, Object> namedParameters = new HashMap<String, Object>();
-		namedParameters.put("epp_empid", employeeId);
+		namedParameters.put("epp_id", empPassport.getId());
+		namedParameters.put("epp_emp_id", employeeId);
 		namedParameters.put("epp_number", empPassport.getPassportNumber());
-		namedParameters.put("epp_dateofissue", empPassport.getDateOfIssue());
-		namedParameters.put("epp_dateofexpiry", empPassport.getDateOfExpiry());
+		namedParameters.put("epp_date_of_issue", empPassport.getDateOfIssue());
+		namedParameters.put("epp_date_of_expiry", empPassport.getDateOfExpiry());
 
 		namedParameterJdbcTemplate.update(sql.toString(), namedParameters);
 
 	}
 
 	@Override
-	public EmpPassport getPassport(String employeeId) {
+	public EmpPassport getPassport(int employeeId) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT * FROM emppassport WHERE epp_empid =:epp_empid");
+		sql.append("SELECT * FROM employeepassport WHERE epp_emp_id =:epp_emp_id");
 
 		Map<String, Object> namedParameters = new HashMap<String, Object>();
-		namedParameters.put("epp_empid", employeeId);
+		namedParameters.put("epp_emp_id", employeeId);
 		return namedParameterJdbcTemplate.query(sql.toString(), namedParameters, new EmpPassportRowMapper()).get(0);
 
 	}
 
 	@Override
-	public void updatePassport(EmpPassport empPassport, String employeeId) {
+	public void updatePassport(EmpPassport empPassport, int employeeId) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("UPDATE emppassport SET epp_number =:epp_number, epp_dateofissue =:epp_dateofissue, ");
-		sql.append("epp_dateofexpiry =:epp_dateofexpiry ");
-		sql.append("WHERE epp_empid =:epp_empid");
+		sql.append("UPDATE employeepassport SET epp_number =:epp_number, epp_date_of_issue =:epp_date_of_issue, ");
+		sql.append("epp_date_of_expiry =:epp_date_of_expiry ");
+		sql.append("WHERE epp_emp_id =:epp_emp_id");
 
 		Map<String, Object> namedParameters = new HashMap<String, Object>();
-		namedParameters.put("epp_empid", employeeId);
+		namedParameters.put("epp_emp_id", employeeId);
 		namedParameters.put("epp_number", empPassport.getPassportNumber());
-		namedParameters.put("epp_dateofissue", empPassport.getDateOfIssue());
-		namedParameters.put("epp_dateofexpiry", empPassport.getDateOfExpiry());
+		namedParameters.put("epp_date_of_issue", empPassport.getDateOfIssue());
+		namedParameters.put("epp_date_of_expiry", empPassport.getDateOfExpiry());
 
 		namedParameterJdbcTemplate.update(sql.toString(), namedParameters);
 
 	}
 
 	@Override
-	public void removePassport(String employeeId, String passportNumber) {
+	public void removePassport(int employeeId) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("DELETE FROM emppassport WHERE epp_number =:epp_number && epp_empid =:epp_empid");
+		sql.append("DELETE FROM employeepassport WHERE epp_emp_id =:epp_emp_id");
 
 		Map<String, Object> namedParamerters = new HashMap<String, Object>();
-		namedParamerters.put("epp_number", passportNumber);
-		namedParamerters.put("epp_empid", employeeId);
+
+		namedParamerters.put("epp_emp_id", employeeId);
 
 		namedParameterJdbcTemplate.update(sql.toString(), namedParamerters);
 
@@ -82,9 +84,10 @@ public class EmpPassportDaoImpl implements EmpPassportDao {
 		@Override
 		public EmpPassport mapRow(ResultSet rs, int rowNum) throws SQLException {
 			EmpPassport empPassport = new EmpPassport();
+			empPassport.setId(rs.getInt("epp_id"));
 			empPassport.setPassportNumber(rs.getString("epp_number"));
-			empPassport.setDateOfExpiry(rs.getDate("epp_dateofexpiry"));
-			empPassport.setDateOfIssue(rs.getDate("epp_dateofissue"));
+			empPassport.setDateOfExpiry(rs.getDate("epp_date_of_expiry"));
+			empPassport.setDateOfIssue(rs.getDate("epp_date_of_issue"));
 			return empPassport;
 		}
 

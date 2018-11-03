@@ -4,12 +4,12 @@ import com.pmt.model.EmpPassport;
 
 public interface EmpPassportDao {
 
-	void addPassport(EmpPassport empPassport, String employeeId);
+	void addPassport(EmpPassport empPassport, int employeeId);
 
-	EmpPassport getPassport(String employeeId);
+	EmpPassport getPassport(int employeeId);
 
-	void updatePassport(EmpPassport empPassport, String employeeId);
-	
-	void removePassport(String employeeId, String passportNumber);
+	void updatePassport(EmpPassport empPassport, int employeeId);
+
+	void removePassport(int employeeId);
 
 }

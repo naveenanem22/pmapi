@@ -15,25 +15,25 @@ public class EmpPassportServiceImpl implements EmpPassportService {
 	private EmpPassportDao empPassportDao;
 
 	@Override
-	public void addPassport(EmpPassport empPassport, String employeeId) {
+	public void addPassport(EmpPassport empPassport, int employeeId) {
 		empPassportDao.addPassport(empPassport, employeeId);
 
 	}
 
 	@Override
-	public EmpPassport getPassport(String employeeId) {
+	public EmpPassport getPassport(int employeeId) {
 		return empPassportDao.getPassport(employeeId);
 	}
 
 	@Override
-	public void updatePassport(EmpPassport empPassport, String employeeId) {
+	public void updatePassport(EmpPassport empPassport, int employeeId) {
 		empPassportDao.updatePassport(empPassport, employeeId);
 
 	}
 
 	@Override
-	public void removePassport(String employeeId, String passportNumber) {
-		empPassportDao.removePassport(employeeId, passportNumber);
+	public void removePassport(int employeeId) {
+		empPassportDao.removePassport(employeeId);
 
 	}
 
