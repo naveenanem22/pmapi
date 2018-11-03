@@ -389,9 +389,9 @@ public class RestController {
 	@GET
 	@Path("/employees/{id}/prevEmployers")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getPrevEmploymentRecords(@PathParam("id") String employeeId) {
+	public Response getPrevEmploymentRecords(@PathParam("id") int employeeId) {
 		ResultWithData result = new ResultWithData();
-		Map<String, List<EmpPrevEmployment>> empPrevEmployments = new HashMap<String, List<EmpPrevEmployment>>();
+		Map<Integer, List<EmpPrevEmployment>> empPrevEmployments = new HashMap<Integer, List<EmpPrevEmployment>>();
 		empPrevEmployments.put(employeeId, empPrevEmploymentService.listPrevEmploymentsByEmployeeId(employeeId));
 		result.setStatus(REST_STATUS_SUCCESS);
 		result.setData(empPrevEmployments);
@@ -405,7 +405,7 @@ public class RestController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addPrevEmploymentRecords(@Valid Set<EmpPrevEmployment> empPrevEmployments,
-			@PathParam("id") String employeeId) {
+			@PathParam("id") int employeeId) {
 		ResultWithData result = new ResultWithData();
 		empPrevEmploymentService.addPrevEmployments(employeeId, empPrevEmployments);
 		result.setStatus(REST_STATUS_SUCCESS);
@@ -419,7 +419,7 @@ public class RestController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response updatePrevEmploymentRecords(@Valid Set<EmpPrevEmployment> empPrevEmployments,
-			@PathParam("id") String employeeId) {
+			@PathParam("id") int employeeId) {
 		ResultWithData result = new ResultWithData();
 		empPrevEmploymentService.updatePrevEmployments(employeeId, empPrevEmployments);
 		result.setStatus(REST_STATUS_SUCCESS);
@@ -433,7 +433,7 @@ public class RestController {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response removePrevEmploymentRecords(@Valid Set<EmpPrevEmployment> empPrevEmployments,
-			@PathParam("id") String employeeId) {
+			@PathParam("id") int employeeId) {
 		ResultWithData result = new ResultWithData();
 		empPrevEmploymentService.removePrevEmployments(employeeId, empPrevEmployments);
 		result.setStatus(REST_STATUS_SUCCESS);

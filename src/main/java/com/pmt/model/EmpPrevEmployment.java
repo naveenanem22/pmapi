@@ -7,6 +7,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EmpPrevEmployment {
 
+	@JsonProperty(value = "id")
+	private int id;
+
 	@JsonProperty(value = "companyName")
 	private String companyName;
 
@@ -48,6 +51,14 @@ public class EmpPrevEmployment {
 
 	@JsonProperty(value = "oldStartDate")
 	private Date oldStartDate;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public Date getOldStartDate() {
 		return oldStartDate;

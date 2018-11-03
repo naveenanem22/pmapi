@@ -6,11 +6,11 @@ import java.util.Set;
 import com.pmt.model.EmpPrevEmployment;
 
 public interface EmpPrevEmploymentService {
-	int addPrevEmployments(String employeeId, Set<EmpPrevEmployment> empPrevEmployments);
+	int addPrevEmployments(int employeeId, Set<EmpPrevEmployment> empPrevEmployments);
 
-	int updatePrevEmployments(String employeeId, Set<EmpPrevEmployment> empPrevEmployments);
+	int updatePrevEmployments(int employeeId, Set<EmpPrevEmployment> empPrevEmployments);
 
-	int removePrevEmployments(String employeeId, Set<EmpPrevEmployment> empPrevEmployments);
+	int removePrevEmployments(int employeeId, Set<EmpPrevEmployment> empPrevEmployments);
 
-	List<EmpPrevEmployment> listPrevEmploymentsByEmployeeId(String employeeId);
+	List<EmpPrevEmployment> listPrevEmploymentsByEmployeeId(int employeeId);
 }

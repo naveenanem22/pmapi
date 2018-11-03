@@ -18,23 +18,23 @@ public class EmpPrevEmploymentServiceImpl implements EmpPrevEmploymentService {
 	private EmpPrevEmploymentDao empPrevEmploymentDao;
 
 	@Override
-	public int addPrevEmployments(String employeeId, Set<EmpPrevEmployment> empPrevEmployments) {
+	public int addPrevEmployments(int employeeId, Set<EmpPrevEmployment> empPrevEmployments) {
 		return empPrevEmploymentDao.addPrevEmployments(employeeId, empPrevEmployments);
 
 	}
 
 	@Override
-	public int updatePrevEmployments(String employeeId, Set<EmpPrevEmployment> empPrevEmployments) {
+	public int updatePrevEmployments(int employeeId, Set<EmpPrevEmployment> empPrevEmployments) {
 		return empPrevEmploymentDao.updatePrevEmployments(employeeId, empPrevEmployments);
 	}
 
 	@Override
-	public int removePrevEmployments(String employeeId, Set<EmpPrevEmployment> empPrevEmployments) {
+	public int removePrevEmployments(int employeeId, Set<EmpPrevEmployment> empPrevEmployments) {
 		return empPrevEmploymentDao.removePrevEmployments(employeeId, empPrevEmployments);
 	}
 
 	@Override
-	public List<EmpPrevEmployment> listPrevEmploymentsByEmployeeId(String employeeId) {
+	public List<EmpPrevEmployment> listPrevEmploymentsByEmployeeId(int employeeId) {
 		return empPrevEmploymentDao.listPrevEmploymentsByEmployeeId(employeeId);
 	}
 
