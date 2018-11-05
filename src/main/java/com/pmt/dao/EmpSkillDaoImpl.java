@@ -14,6 +14,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.pmt.model.EmpSkill;
+import com.pmt.model.Skill;
 
 @Repository(value = "empSkillDaoImpl")
 public class EmpSkillDaoImpl implements EmpSkillDao {
@@ -23,15 +24,16 @@ public class EmpSkillDaoImpl implements EmpSkillDao {
 	private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
 	@Override
-	public int addSkills(String employeeId, Set<EmpSkill> empSkills) {
-		String sql = "INSERT INTO empskill " + "(es_empid, es_sklid, es_experienceinmonths) "
-				+ "VALUES(:es_empid, :es_sklid, :es_experienceinmonths)";
+	public int addSkills(int employeeId, Set<EmpSkill> empSkills) {
+		String sql = "INSERT INTO employeeskill " + "(es_id, es_emp_id, es_skl_id, es_experience_in_months) "
+				+ "VALUES(:es_id,:es_emp_id, :es_skl_id, :es_experience_in_months)";
 		Map<String, Object> namedParameters = new HashMap<String, Object>();
 
 		empSkills.forEach(empSkill -> {
-			namedParameters.put("es_empid", employeeId);
-			namedParameters.put("es_sklid", empSkill.getSkillId());
-			namedParameters.put("es_experienceinmonths", empSkill.getExperienceInMonths());
+			namedParameters.put("es_id", empSkill.getId());
+			namedParameters.put("es_emp_id", employeeId);
+			namedParameters.put("es_skl_id", empSkill.getSkill().getId());
+			namedParameters.put("es_experience_in_months", empSkill.getExperienceInMonths());
 			namedParameterJdbcTemplate.update(sql, namedParameters);
 		});
 
@@ -40,31 +42,31 @@ public class EmpSkillDaoImpl implements EmpSkillDao {
 	}
 
 	@Override
-	public int removeSkills(String employeeId, Set<String> skillIds) {
-		String sql = "DELETE FROM empskill WHERE es_empid =:es_empid && es_sklid IN (:es_sklids)";
+	public int removeSkills(int employeeId, Set<Integer> skillIds) {
+		String sql = "DELETE FROM employeeskill WHERE es_emp_id =:es_emp_id && es_skl_id IN (:es_skl_ids)";
 		Map<String, Object> namedParameters = new HashMap<String, Object>();
-		namedParameters.put("es_empid", employeeId);
-		namedParameters.put("es_sklids", skillIds);
+		namedParameters.put("es_emp_id", employeeId);
+		namedParameters.put("es_skl_ids", skillIds);
 		return namedParameterJdbcTemplate.update(sql, namedParameters);
 	}
 
 	@Override
-	public List<EmpSkill> listSkillsById(String employeeId) {
-		String sql = "SELECT * FROM empskill INNER JOIN skill ON es_sklid = skl_id WHERE es_empid =:es_empid";
+	public List<EmpSkill> listSkillsById(int employeeId) {
+		String sql = "SELECT * FROM employeeskill INNER JOIN skill ON es_skl_id = skl_id WHERE es_emp_id =:es_emp_id";
 		Map<String, Object> namedParameters = new HashMap<String, Object>();
-		namedParameters.put("es_empid", employeeId);
+		namedParameters.put("es_emp_id", employeeId);
 		return namedParameterJdbcTemplate.query(sql, namedParameters, new EmpSkillMapper());
 	}
 
 	@Override
-	public void updateSkillsByEmployeeId(String employeeId, Set<EmpSkill> empSkills) {
-		String sql = "UPDATE empskill SET es_experienceinmonths=:es_experienceinmonths "
-				+ "WHERE es_empid =:es_empid && es_sklid =:es_sklid";
+	public void updateSkillsByEmployeeId(int employeeId, Set<EmpSkill> empSkills) {
+		String sql = "UPDATE employeeskill SET es_experience_in_months=:es_experience_in_months "
+				+ "WHERE es_emp_id =:es_emp_id && es_skl_id =:es_skl_id";
 		Map<String, Object> namedParameters = new HashMap<String, Object>();
 		empSkills.forEach(empSkill -> {
-			namedParameters.put("es_experienceinmonths", empSkill.getExperienceInMonths());
-			namedParameters.put("es_empid", employeeId);
-			namedParameters.put("es_sklid", empSkill.getSkillId());
+			namedParameters.put("es_experience_in_months", empSkill.getExperienceInMonths());
+			namedParameters.put("es_emp_id", employeeId);
+			namedParameters.put("es_skl_id", empSkill.getSkill().getId());
 			namedParameterJdbcTemplate.update(sql, namedParameters);
 		});
 
@@ -73,9 +75,12 @@ public class EmpSkillDaoImpl implements EmpSkillDao {
 	private static final class EmpSkillMapper implements RowMapper<EmpSkill> {
 		public EmpSkill mapRow(ResultSet rs, int rowNum) throws SQLException {
 			EmpSkill empSkill = new EmpSkill();
-			empSkill.setExperienceInMonths(rs.getInt("es_experienceinmonths"));
-			empSkill.setSkillId(rs.getString("es_sklid"));
-			empSkill.setSkillName(rs.getString("skl_name"));
+			Skill skill = new Skill();
+			skill.setId(rs.getInt("skl_id"));
+			skill.setName(rs.getString("skl_name"));
+			empSkill.setExperienceInMonths(rs.getInt("es_experience_in_months"));
+			empSkill.setId(rs.getInt("es_id"));
+			empSkill.setSkill(skill);
 
 			return empSkill;
 		}

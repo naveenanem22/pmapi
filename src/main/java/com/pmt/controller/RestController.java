@@ -331,9 +331,9 @@ public class RestController {
 	@GET
 	@Path("/employees/{id}/skills")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getSkills(@PathParam("id") String employeeId) {
+	public Response getSkills(@PathParam("id") int employeeId) {
 		ResultWithData result = new ResultWithData();
-		Map<String, List<EmpSkill>> empSkills = new HashMap<String, List<EmpSkill>>();
+		Map<Integer, List<EmpSkill>> empSkills = new HashMap<Integer, List<EmpSkill>>();
 		empSkills.put(employeeId, empSkillService.listSkillsById(employeeId));
 		result.setStatus(REST_STATUS_SUCCESS);
 		result.setData(empSkills);
@@ -346,7 +346,7 @@ public class RestController {
 	@Path("/employees/{id}/skills")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addSkills(@Valid Set<EmpSkill> empSkills, @PathParam("id") String employeeId) {
+	public Response addSkills(@Valid Set<EmpSkill> empSkills, @PathParam("id") int employeeId) {
 		ResultWithData result = new ResultWithData();
 		empSkillService.addSkills(employeeId, empSkills);
 		result.setStatus(REST_STATUS_SUCCESS);
@@ -359,7 +359,7 @@ public class RestController {
 	@Path("/employees/{id}/skills")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateSkills(@Valid Set<EmpSkill> empSkills, @PathParam("id") String employeeId) {
+	public Response updateSkills(@Valid Set<EmpSkill> empSkills, @PathParam("id") int employeeId) {
 		ResultWithData result = new ResultWithData();
 		empSkillService.updateSkillsByEmployeeId(employeeId, empSkills);
 		result.setStatus(REST_STATUS_SUCCESS);
@@ -372,7 +372,7 @@ public class RestController {
 	@Path("/employees/{empId}/skills")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response removeSkills(Set<String> skillIds, @PathParam("empId") String employeeId) {
+	public Response removeSkills(Set<Integer> skillIds, @PathParam("empId") int employeeId) {
 		ResultWithData result = new ResultWithData();
 		empSkillService.removeSkills(employeeId, skillIds);
 

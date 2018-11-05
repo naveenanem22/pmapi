@@ -4,28 +4,33 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class EmpSkill {
 
-	@JsonProperty(value = "skillId")
-	private String skillId;
+	@JsonProperty(value = "id")
+	int id;
 
-	private String skillName;
+	@JsonProperty(value = "skill")
+	private Skill skill;
 
 	@JsonProperty(value = "experienceInMonths")
 	private int experienceInMonths;
 
-	public String getSkillName() {
-		return skillName;
+	public EmpSkill() {
+
 	}
 
-	public void setSkillName(String skillName) {
-		this.skillName = skillName;
+	public int getId() {
+		return id;
 	}
 
-	public String getSkillId() {
-		return skillId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public void setSkillId(String skillId) {
-		this.skillId = skillId;
+	public Skill getSkill() {
+		return skill;
+	}
+
+	public void setSkill(Skill skill) {
+		this.skill = skill;
 	}
 
 	public int getExperienceInMonths() {

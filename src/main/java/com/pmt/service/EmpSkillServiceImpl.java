@@ -21,24 +21,24 @@ public class EmpSkillServiceImpl implements EmpSkillService {
 
 	@Override
 	@Transactional(value = "jdbcTransactionManager")
-	public int addSkills(String employeeId, Set<EmpSkill> empSkills) {
+	public int addSkills(int employeeId, Set<EmpSkill> empSkills) {
 		return empSkillDao.addSkills(employeeId, empSkills);
 	}
 
 	@Override
 	@Transactional(value = "jdbcTransactionManager")
-	public int removeSkills(String employeeId, Set<String> skillIds) {
+	public int removeSkills(int employeeId, Set<Integer> skillIds) {
 		return empSkillDao.removeSkills(employeeId, skillIds);
 	}
 
 	@Override
-	@Transactional(value = "jdbcTransactionManager")
-	public List<EmpSkill> listSkillsById(String employeeId) {
+	@Transactional(readOnly = true, value = "jdbcTransactionManager")
+	public List<EmpSkill> listSkillsById(int employeeId) {
 		return empSkillDao.listSkillsById(employeeId);
 	}
 
 	@Override
-	public void updateSkillsByEmployeeId(String employeeId, Set<EmpSkill> empSkills) {
+	public void updateSkillsByEmployeeId(int employeeId, Set<EmpSkill> empSkills) {
 		empSkillDao.updateSkillsByEmployeeId(employeeId, empSkills);
 
 	}
