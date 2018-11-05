@@ -29,7 +29,9 @@ import com.pmt.model.EmpPassport;
 import com.pmt.model.EmpPrevEmployment;
 import com.pmt.model.EmpSkill;
 import com.pmt.model.Employee;
+import com.pmt.model.IndividualAddress;
 import com.pmt.model.EmpVisa;
+import com.pmt.service.EmpAddressService;
 import com.pmt.service.EmpEducationService;
 import com.pmt.service.EmpPassportService;
 import com.pmt.service.EmpPrevEmploymentService;
@@ -80,6 +82,10 @@ public class RestController {
 	@Autowired
 	@Qualifier(value = "empPassportServiceImpl")
 	private EmpPassportService empPassportService;
+	
+	@Autowired
+	@Qualifier(value  = "empAddressServiceImpl")
+	private EmpAddressService empAddressService;
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -501,6 +507,23 @@ public class RestController {
 	}
 
 	/********** Employee-Passport APIs End ***********/
+	
+	/********** Employee-Address APIs Start ***********/
+	
+	@POST
+	@Path("/employees/{id}/addresses")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addEmployeeAddress(@PathParam("id") int employeeId, @Valid IndividualAddress employeeAddress) {
+		ResultWithData result = new ResultWithData();
+		empAddressService.addEmployeeAddressByEmployeeId(employeeAddress, employeeId);
+		result.setStatus(REST_STATUS_SUCCESS);
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+		};
+		return Response.status(Status.OK).entity(entity).build();
+	}
+	
+	/********** Employee-Address APIs End ***********/
 
 	/* This for developer testing that need to be deleted if no more necessary */
 	@GET

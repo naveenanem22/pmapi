@@ -2,7 +2,7 @@ package com.pmt.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class PersonalAddress {
+public class IndividualAddress {
 
 	@JsonProperty(value = "id")
 	private int id;
@@ -123,6 +123,20 @@ public class PersonalAddress {
 
 	public void setAddressType(String addressType) {
 		this.addressType = addressType;
+	}
+
+	@Override
+	public String toString() {
+		return "IndividualAddress [id=" + id + ", streetName=" + streetName + ", buildingNumber=" + buildingNumber
+				+ ", city=" + city + ", state=" + state + ", country=" + country + ", postalCode=" + postalCode
+				+ ", addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", addressLine3=" + addressLine3
+				+ ", addressType=" + addressType + ", getId()=" + getId() + ", getStreetName()=" + getStreetName()
+				+ ", getBuildingNumber()=" + getBuildingNumber() + ", getCity()=" + getCity() + ", getState()="
+				+ getState() + ", getCountry()=" + getCountry() + ", getPostalCode()=" + getPostalCode()
+				+ ", getAddressLine1()=" + getAddressLine1() + ", getAddressLine2()=" + getAddressLine2()
+				+ ", getAddressLine3()=" + getAddressLine3() + ", getAddressType()=" + getAddressType()
+				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
+				+ "]";
 	}
 
 }

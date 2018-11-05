@@ -17,6 +17,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.context.ApplicationContext;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
+import com.pmt.custom.exceptions.InternalServerException;
 import com.pmt.util.propertyfilehandlers.AppErrorProperties;
 import com.pmt.util.response.ResultWithData;
 import org.apache.commons.lang3.exception.ExceptionUtils;
@@ -43,7 +44,15 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
 	@Override
 	public Response toResponse(Throwable ex) {
 		ResultWithData result = new ResultWithData();
-		
+
+		if (ex instanceof InternalServerException) {
+			result.setData("Failed for unknown reasons");
+			result.setStatus(REST_STATUS_FAILURE);
+			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+			};
+			return Response.status(Status.INTERNAL_SERVER_ERROR).entity(entity).build();
+		}
+
 		AppErrorProperties aep = new ApplicationContextProvider().getApplicationContext().getBean("appErrorProp",
 				AppErrorProperties.class);
 		if (ExceptionUtils.indexOfType(ex, MySQLIntegrityConstraintViolationException.class) != -1) {
@@ -64,8 +73,7 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
 			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
 			};
 			return Response.status(Status.BAD_REQUEST).entity(entity).build();
-		}
-		else {
+		} else {
 			result.setData("Failed for unknown reasons");
 			result.setStatus(REST_STATUS_FAILURE);
 		}

@@ -2,12 +2,12 @@ package com.pmt.dao;
 
 import java.util.List;
 
-import com.pmt.model.PersonalAddress;
+import com.pmt.model.IndividualAddress;
 
 public interface EmpAddressDao {
 	
-	List<PersonalAddress> getEmployeeAddressesByEmployeeId(int employeeId);
-	boolean addEmployeeAddress(PersonalAddress employeeAddress);
-	boolean updateEmployeeAddress(PersonalAddress employeeAddress);	
+	List<IndividualAddress> getEmployeeAddressesByEmployeeId(int employeeId);
+	boolean addEmployeeAddress(IndividualAddress employeeAddress, int employeeId);
+	boolean updateEmployeeAddress(IndividualAddress employeeAddress);	
 
 }
