@@ -4,10 +4,10 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class Visa {
+public class EmpVisa {
 
 	@JsonProperty(value = "id")
-	private String id;
+	private int id;
 
 	@JsonProperty(value = "country")
 	private String country;
@@ -21,15 +21,15 @@ public class Visa {
 	@JsonProperty(value = "validFrom")
 	private Date validFrom;
 
-	public Visa() {
+	public EmpVisa() {
 
 	}
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

@@ -29,7 +29,7 @@ import com.pmt.model.EmpPassport;
 import com.pmt.model.EmpPrevEmployment;
 import com.pmt.model.EmpSkill;
 import com.pmt.model.Employee;
-import com.pmt.model.Visa;
+import com.pmt.model.EmpVisa;
 import com.pmt.service.EmpEducationService;
 import com.pmt.service.EmpPassportService;
 import com.pmt.service.EmpPrevEmploymentService;
@@ -243,9 +243,9 @@ public class RestController {
 	@GET
 	@Path("/employees/{id}/visas")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getVisas(@PathParam("id") String employeeId) {
+	public Response getVisas(@PathParam("id") int employeeId) {
 		ResultWithData result = new ResultWithData();
-		Map<String, List<Visa>> empVisas = new HashMap<String, List<Visa>>();
+		Map<Integer, List<EmpVisa>> empVisas = new HashMap<Integer, List<EmpVisa>>();
 		empVisas.put(employeeId, visaService.listVisasByEmployeeId(employeeId));
 		result.setStatus(REST_STATUS_SUCCESS);
 		result.setData(empVisas);
@@ -258,7 +258,7 @@ public class RestController {
 	@Path("/employees/{id}/visas")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response addVisas(@Valid List<Visa> visas, @PathParam("id") String employeeId) {
+	public Response addVisas(@Valid List<EmpVisa> visas, @PathParam("id") int employeeId) {
 		ResultWithData result = new ResultWithData();
 		visas.forEach(visa -> {
 			visaService.addVisa(visa, employeeId);
@@ -273,7 +273,7 @@ public class RestController {
 	@Path("/employees/{id}/visas")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response updateVisas(@Valid List<Visa> visas, @PathParam("id") String empId) {
+	public Response updateVisas(@Valid List<EmpVisa> visas, @PathParam("id") int empId) {
 		ResultWithData result = new ResultWithData();
 		visaService.updateVisasByEmployeeId(visas, empId);
 		result.setStatus(REST_STATUS_SUCCESS);
@@ -285,7 +285,7 @@ public class RestController {
 	@DELETE
 	@Path("/employees/{empId}/visas/{visaId}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response removeVisa(@PathParam("empId") String empId, @PathParam("visaId") String visaId) {
+	public Response removeVisa(@PathParam("empId") int empId, @PathParam("visaId") int visaId) {
 		ResultWithData result = new ResultWithData();
 		if (visaService.removeVisa(empId, visaId) == 1) {
 			result.setStatus(REST_STATUS_SUCCESS);
@@ -308,7 +308,7 @@ public class RestController {
 	@Path("/employees/{empId}/visas")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response removeVisas(Set<String> visaIds, @PathParam("empId") String empId) {
+	public Response removeVisas(Set<Integer> visaIds, @PathParam("empId") int empId) {
 		ResultWithData result = new ResultWithData();
 
 		if (visaService.removeVisas(empId, visaIds) == visaIds.size()) {
