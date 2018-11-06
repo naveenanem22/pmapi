@@ -82,9 +82,9 @@ public class RestController {
 	@Autowired
 	@Qualifier(value = "empPassportServiceImpl")
 	private EmpPassportService empPassportService;
-	
+
 	@Autowired
-	@Qualifier(value  = "empAddressServiceImpl")
+	@Qualifier(value = "empAddressServiceImpl")
 	private EmpAddressService empAddressService;
 
 	@GET
@@ -507,9 +507,9 @@ public class RestController {
 	}
 
 	/********** Employee-Passport APIs End ***********/
-	
+
 	/********** Employee-Address APIs Start ***********/
-	
+
 	@POST
 	@Path("/employees/{id}/addresses")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -522,7 +522,38 @@ public class RestController {
 		};
 		return Response.status(Status.OK).entity(entity).build();
 	}
-	
+
+	@GET
+	@Path("/employees/{id}/addresses")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getEmployeeAddressesByEmployeeId(@PathParam("id") int employeeId) {
+		logger.debug("Received the employeeId: "+employeeId);
+		ResultWithData result = new ResultWithData();
+		result.setData(empAddressService.getEmployeeAddressesByEmployeeId(employeeId));
+		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
+
+		};
+		return Response.status(Status.OK).entity(entity).build();
+
+	}
+
+	@PUT
+	@Path("/employees/{id}/addresses")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response updateEmployeeAddressByEmployeeId(@PathParam("id") int employeeId,
+			@Valid IndividualAddress employeeAddress) {
+		empAddressService.updateEmployeeAddressByEmployeeId(employeeAddress, employeeId);
+		return Response.status(Status.NO_CONTENT).build();
+	}
+
+	@DELETE
+	@Path("/employees/{empId}/addresses/{addressId}")
+	public Response removeEmployeeAddressByEmployeeId(@PathParam("empId") int employeeId,
+			@PathParam("addressId") int empAddressId) {
+		empAddressService.removeEmployeeAddress(empAddressId, employeeId);
+		return Response.status(Status.NO_CONTENT).build();
+	}
+
 	/********** Employee-Address APIs End ***********/
 
 	/* This for developer testing that need to be deleted if no more necessary */

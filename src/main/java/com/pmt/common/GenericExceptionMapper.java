@@ -46,7 +46,7 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
 		ResultWithData result = new ResultWithData();
 
 		if (ex instanceof InternalServerException) {
-			result.setData("Failed for unknown reasons");
+			result.setData(ex.getMessage());
 			result.setStatus(REST_STATUS_FAILURE);
 			GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {
 			};
@@ -76,6 +76,7 @@ public class GenericExceptionMapper implements ExceptionMapper<Throwable> {
 		} else {
 			result.setData("Failed for unknown reasons");
 			result.setStatus(REST_STATUS_FAILURE);
+			ex.printStackTrace();
 		}
 
 		GenericEntity<ResultWithData> entity = new GenericEntity<ResultWithData>(result) {

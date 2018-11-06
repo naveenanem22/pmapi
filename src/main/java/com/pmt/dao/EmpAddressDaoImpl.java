@@ -94,7 +94,8 @@ public class EmpAddressDaoImpl implements EmpAddressDao {
 					keyColumnNames) == 1) {
 				logger.debug("Address Record id: " + addressKey.getKey().intValue());
 				SqlParameterSource paramSourceCreateMapping = new MapSqlParameterSource()
-						.addValue("empaddr_ia_id", addressKey.getKey().intValue()).addValue("empaddr_emp_id", employeeId);
+						.addValue("empaddr_ia_id", addressKey.getKey().intValue())
+						.addValue("empaddr_emp_id", employeeId);
 
 				numberOfRowsAffected = namedParameterJdbcTemplate.update(sqlCreateMapping.toString(),
 						paramSourceCreateMapping);
@@ -113,9 +114,41 @@ public class EmpAddressDaoImpl implements EmpAddressDao {
 	}
 
 	@Override
-	public boolean updateEmployeeAddress(IndividualAddress employeeAddress) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean updateEmployeeAddress(IndividualAddress employeeAddress, int employeeId) {
+		logger.debug("Updating address details for employee with Id: " + employeeId);
+		logger.debug("Address data: " + employeeAddress);
+		StringBuilder sql = new StringBuilder();
+		sql.append("UPDATE individualaddress SET ");
+		sql.append("ia_street_name =:ia_street_name, ");
+		sql.append("ia_building_number =:ia_building_number, ");
+		sql.append("ia_city =:ia_city, ");
+		sql.append("ia_state =:ia_state, ");
+		sql.append("ia_country =:ia_country, ");
+		sql.append("ia_postal_code =:ia_postal_code, ");
+		sql.append("ia_addr_line_1 =:ia_addr_line_1, ");
+		sql.append("ia_addr_line_2 =:ia_addr_line_2, ");
+		sql.append("ia_addr_line_3 =:ia_addr_line_3, ");
+		sql.append("ia_addr_type =:ia_addr_type ");
+		sql.append("WHERE ia_id =:ia_id");
+
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("ia_street_name", employeeAddress.getStreetName());
+		paramMap.put("ia_building_number", employeeAddress.getBuildingNumber());
+		paramMap.put("ia_city", employeeAddress.getCity());
+		paramMap.put("ia_state", employeeAddress.getState());
+		paramMap.put("ia_postal_code", employeeAddress.getPostalCode());
+		paramMap.put("ia_addr_line_1", employeeAddress.getAddressLine1());
+		paramMap.put("ia_addr_line_2", employeeAddress.getAddressLine2());
+		paramMap.put("ia_addr_line_3", employeeAddress.getAddressLine3());
+		paramMap.put("ia_addr_type", employeeAddress.getAddressType());
+		paramMap.put("ia_id", employeeAddress.getId());
+		paramMap.put("ia_country", employeeAddress.getCountry());
+
+		if (namedParameterJdbcTemplate.update(sql.toString(), paramMap) == 1)
+			return true;
+		else
+			throw new InternalServerException("Unexpected exception occured while updating employee address.");
+
 	}
 
 	private final class PersonalAddressRowMapper implements RowMapper<IndividualAddress> {
@@ -137,6 +170,37 @@ public class EmpAddressDaoImpl implements EmpAddressDao {
 
 			return personalAddress;
 		}
+
+	}
+
+	@Override
+	public boolean removeEmployeeAddress(int employeeAddressId, int employeeId) {
+		logger.debug("Removing address for employee with Id: " + employeeId);
+		logger.debug("Id of the Address to be removed:" + employeeAddressId);
+		StringBuilder sqlDeleteMapping = new StringBuilder();
+		sqlDeleteMapping.append("DELETE FROM employeeaddress WHERE ");
+		sqlDeleteMapping.append("empaddr_ia_id =:empaddr_ia_id && empaddr_emp_id =:empaddr_emp_id");
+
+		StringBuilder sqlDeleteAddress = new StringBuilder();
+		sqlDeleteAddress.append("DELETE FROM individualaddress WHERE ");
+		sqlDeleteAddress.append("ia_id =:ia_id");
+
+		Map<String, Object> paramMap = new HashMap<>();
+		paramMap.put("empaddr_ia_id", employeeAddressId);
+		paramMap.put("empaddr_emp_id", employeeId);
+		paramMap.put("ia_id", employeeAddressId);
+
+		try {
+			if (namedParameterJdbcTemplate.update(sqlDeleteMapping.toString(), paramMap) == 1) {
+				namedParameterJdbcTemplate.update(sqlDeleteAddress.toString(), paramMap);
+
+			}
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+			throw new InternalServerException("Unexpected exception occured while deleting employee address.");
+		}
+
+		return true;
 
 	}
 
