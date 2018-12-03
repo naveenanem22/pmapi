@@ -54,7 +54,7 @@ import static com.pmt.common.PMAPIConstants.*;
  * @since 2017-01-01
  */
 @Controller
-@Path("/projmgmt/V1/")
+@Path("/v0/employee-management")
 public class RestController {
 
 	private static final Logger logger = LogManager.getLogger(RestController.class);
