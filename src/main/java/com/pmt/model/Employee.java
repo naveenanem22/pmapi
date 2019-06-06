@@ -62,8 +62,30 @@ public class Employee {
 	@JsonSerialize(using = JsonDateSerializer.class)
 	private LocalDateTime updatedDate;
 
+	@JsonProperty(value = "individualAddress")
+	private IndividualAddress individualAddress;
+
+	@JsonProperty(value = "contactInfo")
+	private ContactInfo contactInfo;
+
 	public Employee() {
 
+	}
+
+	public IndividualAddress getIndividualAddress() {
+		return individualAddress;
+	}
+
+	public void setIndividualAddress(IndividualAddress individualAddress) {
+		this.individualAddress = individualAddress;
+	}
+
+	public ContactInfo getContactInfo() {
+		return contactInfo;
+	}
+
+	public void setContactInfo(ContactInfo contactInfo) {
+		this.contactInfo = contactInfo;
 	}
 
 	public LocalDateTime getCreatedDate() {
@@ -128,6 +150,14 @@ public class Employee {
 
 	public void setMaritalStatus(String maritalStatus) {
 		this.maritalStatus = maritalStatus;
+	}
+
+	@Override
+	public String toString() {
+		return "Employee [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", gender=" + gender
+				+ ", maritalStatus=" + maritalStatus + ", dob=" + dob + ", createdDate=" + createdDate
+				+ ", updatedDate=" + updatedDate + ", individualAddress=" + individualAddress + ", contactInfo="
+				+ contactInfo + "]";
 	}
 
 }
