@@ -68,8 +68,19 @@ public class Employee {
 	@JsonProperty(value = "credits")
 	private int credits;
 
+	@JsonProperty(value = "base64ProfilePic")
+	private String base64ProfilePic;
+
 	public Employee() {
 
+	}
+
+	public String getBase64ProfilePic() {
+		return base64ProfilePic;
+	}
+
+	public void setBase64ProfilePic(String base64ProfilePic) {
+		this.base64ProfilePic = base64ProfilePic;
 	}
 
 	public int getCredits() {
