@@ -273,6 +273,11 @@
 			<version>1.2.17</version>
 		</dependency>
 		<!-- log4j dependencies end -->
+		<dependency>
+			<groupId>com.techietipps.pmapi</groupId>
+			<artifactId>pmapi-common</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
